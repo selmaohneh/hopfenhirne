@@ -20,8 +20,8 @@ jobs:
       - name: Publish .NET Core Project
         run: dotnet publish hopfenhirne.csproj -c Release -o release --nologo
 
-      - name: Change base-tag in index.html from / to hopfenhirne
-        run: sed -i 's/<base href="\/" \/>/<base href="\/hopfenhirne\/" \/>/g' release/wwwroot/index.html
+      - name: Update base href in index.html for GitHub Pages
+        run: sed -i 's|<base href="/" />|<base href="https://github.com/selmaohneh/hopfenhirne/tree/gh-pages/" />|g' ./output/wwwroot/index.html
 
       - name: Commit wwwroot to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@3.7.1
