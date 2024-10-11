@@ -21,7 +21,7 @@ jobs:
         run: dotnet publish hopfenhirne.csproj -c Release -o release --nologo
 
       - name: Update base href in index.html for GitHub Pages
-        run: sed -i 's|<base href="/" />|<base href="https://github.com/selmaohneh/hopfenhirne/tree/gh-pages/" />|g' ./output/wwwroot/index.html
+        run: sed -i 's|<base href="/" />|<base href="https://github.com/selmaohneh/hopfenhirne/tree/gh-pages/" />|g' release/wwwroot/index.html
 
       - name: Commit wwwroot to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@3.7.1
