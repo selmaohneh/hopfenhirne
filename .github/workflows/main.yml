@@ -17,17 +17,11 @@ jobs:
         with:
           dotnet-version: '9.0.100-rc.1.24452.12'
        
-      - name: Restore dependencies
-        run: dotnet restore
+      - name: Publish .NET Core Project
+        run: dotnet publish hopfenhirne.csproj -c Release -o release --nologo
 
-      - name: Build the project
-        run: dotnet build --configuration Release --no-restore
-
-      - name: Publish the project
-        run: dotnet publish --configuration Release --output ./output --no-restore
-
-      - name: Update base href in index.html
-        run: sed -i 's|<base href="/" />|<base href="/hopfenhirne/" />|g' ./output/wwwroot/index.html
+      - name: Change base-tag in index.html from / to hopfenhirne
+        run: sed -i 's/<base href="\/" \/>/<base href="\/hopfenhirne\/" \/>/g' release/wwwroot/index.html
 
       - name: Commit wwwroot to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@3.7.1
