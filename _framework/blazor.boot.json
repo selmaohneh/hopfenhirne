@@ -1,9 +1,9 @@
 {
   "mainAssemblyName": "hopfenhirne",
   "resources": {
-    "hash": "sha256-7+GFXRpbskvaICia53EA9+4le7ysd5f/wcUntR5QeuI=",
+    "hash": "sha256-14jc7a7UQRyK8RPgDYEE3bUKmCrcUcBblmgY4WQe45A=",
     "fingerprinting": {
-      "hopfenhirne.9x0dcx9vpt.wasm": "hopfenhirne.wasm",
+      "hopfenhirne.hph2r71ubj.wasm": "hopfenhirne.wasm",
       "Microsoft.AspNetCore.Components.40ml5x1lzf.wasm": "Microsoft.AspNetCore.Components.wasm",
       "Microsoft.AspNetCore.Components.Web.9dzh98v6yu.wasm": "Microsoft.AspNetCore.Components.Web.wasm",
       "Microsoft.AspNetCore.Components.WebAssembly.2bmqob1un0.wasm": "Microsoft.AspNetCore.Components.WebAssembly.wasm",
@@ -64,7 +64,7 @@
       "System.Runtime.InteropServices.JavaScript.e3rxrh7ufy.wasm": "sha256-atY8hb/rIHUbWtvrSeB+okS9Y/9HShtmBX/hBopJ6Y0="
     },
     "assembly": {
-      "hopfenhirne.9x0dcx9vpt.wasm": "sha256-E7pF04UORz61eNoMucMNKARsa+WnDBVEGokQ0x/zrII=",
+      "hopfenhirne.hph2r71ubj.wasm": "sha256-Jc0RDYJ7fZNCL1wS8GWJuPzfGrYTFQ+2ekjpVGmAn6c=",
       "Microsoft.AspNetCore.Components.40ml5x1lzf.wasm": "sha256-XASosyF2HWCsBB+aFtrVsH00Ly2CUt86jJ71pYJY+ik=",
       "Microsoft.AspNetCore.Components.Web.9dzh98v6yu.wasm": "sha256-TQbr/lhdyH1uUfo1h04bAKA1wO6FOm5KihWmCjQ+Fto=",
       "Microsoft.AspNetCore.Components.WebAssembly.2bmqob1un0.wasm": "sha256-bqeQIFGAmlUK3Pb1zx3bvcsGnzJTUgGUPG6sYt6CGVU=",
