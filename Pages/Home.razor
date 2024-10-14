@@ -5,9 +5,14 @@
 		display: flex;
 		justify-content: center;
 	}
+
+		.center-container img {
+			height: 50vh; /* 50% of the viewport height */
+			width: auto; /* Maintain aspect ratio */
+			max-width: 100%; /* Ensure it doesn't exceed its original width */
+		}
 </style>
 
-
 <div class="center-container">
-	<img src="icon.png" width="50%" alt="Die Hopfenhirne" />
+	<img src="icon.png" alt="Die Hopfenhirne" />
 </div>
