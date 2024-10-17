@@ -7,7 +7,7 @@ def lambda_handler(event, context):
 
     if userId:
         statusCode = 200
-        responseMessage = "Received userId " + str(userId}.
+        responseMessage = "Received userId " + str(userId) + "."
     else:
         statusCode = 400
         responseMessage = 'No userId was provided.'
