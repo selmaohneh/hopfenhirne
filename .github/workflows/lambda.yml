@@ -31,7 +31,7 @@ jobs:
     - name: Zip Lambda Function
       run: |
         cd lambda/checkin
-        zip function.zip lambda_function.py
+        zip -r ../../function.zip lambda_function.py
 
     - name: Deploy to AWS Lambda
       run: |
