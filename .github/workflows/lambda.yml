@@ -30,9 +30,10 @@ jobs:
 
     - name: Zip Lambda Function
       run: |
-        cd lambda/checkin
-        zip -r ../../function.zip lambda_function.py
+        zip -r checkin.zip lambda/checkin/checkin.py
+        zip -r add-user.zip lambda/add-user/add-user.py
 
     - name: Deploy to AWS Lambda
       run: |
-        aws lambda update-function-code --function-name checkin --zip-file fileb://function.zip
+        aws lambda update-function-code --function-name checkin --zip-file fileb://checkin.zip
+        aws lambda update-function-code --function-name add-user --zip-file fileb://add-user.zip
