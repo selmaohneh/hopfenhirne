@@ -30,8 +30,8 @@ jobs:
 
     - name: Zip Lambda Function
       run: |
-        zip -r checkin.zip lambda/checkin/checkin.py
-        zip -r add-user.zip lambda/add-user/add-user.py
+        zip -r checkin.zip lambda/checkin/lambda_function.py
+        zip -r add-user.zip lambda/add-user/lambda_function.py
 
     - name: Deploy to AWS Lambda
       run: |
