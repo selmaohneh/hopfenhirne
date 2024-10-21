@@ -17,7 +17,8 @@ def lambda_handler(event, context):
         try:
             table.put_item(
                 Item={
-                    "id": str(id)
+                    "id": str(id),
+                    "name": str(name)
             }
         )
         except Exception as e:
