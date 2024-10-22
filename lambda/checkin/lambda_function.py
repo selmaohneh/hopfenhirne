@@ -1,6 +1,7 @@
 import json
 import boto3
 from datetime import datetime
+import pytz
 
 def lambda_handler(event, context):
 
@@ -12,22 +13,28 @@ def lambda_handler(event, context):
         dynamodb = boto3.resource("dynamodb")
         table = dynamodb.Table("members")
         
+        timezone = pytz.timezone('Europe/Berlin')
+        lastCheckin = datetime.now(timezone).date().isoformat()
+        
         try:
-            table.put_item(
-                Item={
-                    "id": str(id),
-                    "last-checkin": datetime.utcnow().isoformat()
-            }
-        )
+            table.update_item(
+                Key={
+                    "id": str(id)
+                },
+                UpdateExpression="SET lastCheckin = :lastCheckin",
+                ExpressionAttributeValues={
+                    ":lastCheckin": lastCheckin
+                }
+            )
         except Exception as e:
             return {
                 'statusCode': 500,
-                'body': json.dumps(f"Error persisting check-in!" + str(e))
+                'body': json.dumps(f"Error persisting check-in!")
         }
         
         return {
             "statusCode": 200,
-            "body": json.dumps("Received id " + str(id) + ".")
+            "body": json.dumps("Checked-in member with id " + str(id))
         }
     else:
         return {
