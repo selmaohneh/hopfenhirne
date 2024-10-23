@@ -31,7 +31,7 @@ jobs:
     - name: Zip Lambda Function
       run: |
         cd lambda/checkin
-        zip -r ../../checkin.zip lambda_function.py
+        zip -r ../../checkin.zip .
         cd ../add-user
         zip -r ../../add-user.zip lambda_function.py
 
