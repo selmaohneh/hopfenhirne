@@ -25,9 +25,24 @@ def lambda_handler(event, context):
     		"statusCode": 400,
     		"body": json.dumps("At least two members need to checkin")
     	}
+    	
+    
+    boardMemberCheckedIn = False
+    for member in members:
+        name = member['name']
+        if name == "Whizzy" or name == "Cello":
+            boardMemberCheckedIn = True
+    
+    if not boardMemberCheckedIn:
+        return {
+            "statusCode": 400,
+            "body": json.dumps("At least one board member needs to check in")
+        }
+    	
     
     for member in members:
         id = member['id']
+        
         participations = member.get('participations')
         
         table.update_item(
