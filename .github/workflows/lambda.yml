@@ -34,8 +34,11 @@ jobs:
         zip -r ../../checkin.zip .
         cd ../add-user
         zip -r ../../add-user.zip lambda_function.py
+        cd ../daily
+        zip -r ../../daily.zip lambda_function.py
 
     - name: Deploy to AWS Lambda
       run: |
         aws lambda update-function-code --function-name checkin --zip-file fileb://checkin.zip
         aws lambda update-function-code --function-name add-user --zip-file fileb://add-user.zip
+        aws lambda update-function-code --function-name daily --zip-file fileb://daily.zip
