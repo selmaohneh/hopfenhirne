@@ -12,7 +12,7 @@ def lambda_handler(event, context):
     today = datetime.now(timezone).date().isoformat()
         
     response = table.scan(
-        FilterExpression="checkin = :today",
+        FilterExpression="lastCheckin = :today",
         ExpressionAttributeValues={
             ":today": today
         }
@@ -20,7 +20,7 @@ def lambda_handler(event, context):
     
     members = response.get('Items', [])
     
-   for member in members:
+    for member in members:
         id = member['id']
         participations = member.get('participations')
         
