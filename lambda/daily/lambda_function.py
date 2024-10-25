@@ -20,6 +20,12 @@ def lambda_handler(event, context):
     
     members = response.get('Items', [])
     
+    if len(members) < 2:
+    	return {
+    		"statusCode": 400,
+    		"body": json.dumps("At least two members need to checkin")
+    	}
+    
     for member in members:
         id = member['id']
         participations = member.get('participations')
