@@ -11,7 +11,12 @@ def lambda_handler(event, context):
     if not id:
         return {
             "statusCode": 400,
-            "body": json.dumps('No id was provided.')
+            "body": json.dumps('No id was provided.'),
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET',
+                'Access-Control-Allow-Headers': 'Content-Type'
+            }
         }
 
     dynamodb = boto3.resource("dynamodb")
@@ -25,7 +30,12 @@ def lambda_handler(event, context):
     if 'Item' not in getResponse:
         return {
             "statusCode": 404,
-            "body": json.dumps(f"Member with id {id} does not exist.")
+            "body": json.dumps(f"Member with id {id} does not exist."),
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET',
+                'Access-Control-Allow-Headers': 'Content-Type'
+            }
         }
 
     table.update_item(
@@ -40,5 +50,10 @@ def lambda_handler(event, context):
 
     return {
         "statusCode": 200,
-        "body": json.dumps("Checked-in member with id " + str(id))
+        "body": json.dumps("Checked-in member with id " + str(id)),
+        'headers': {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET',
+            'Access-Control-Allow-Headers': 'Content-Type'
+        }
     }
