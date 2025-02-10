@@ -1,4 +1,5 @@
 ﻿@page "/"
+@inject GoogleSheetsService GoogleSheetsService;
 
 <style>
 	.center-container {
@@ -17,3 +18,49 @@
 <div class="center-container">
 	<img src="icon.png" alt="Die Hopfenhirne" />
 </div>
+
+@if (_members.Any())
+{
+<div class="center-container">
+	<table class="table">
+		<thead>
+		<tr>
+			<th>#</th>
+			<th>Name</th>
+			<th>Teilnahmen</th>
+			<th>Winrate [%]</th>
+		</tr>
+		</thead>
+		<tbody>
+		@foreach (var member in _members)
+		{
+		<tr>
+			<td>@member.Number</td>
+			<td>@member.Name</td>
+			<td>@member.NumberOfParticipations</td>
+			<td>@member.WinRatePlot()</td>
+		</tr>
+		}
+		</tbody>
+	</table>
+</div>
+}
+
+
+@code
+{
+	private IQueryable<Member> _members = new List<Member>().AsQueryable();
+	
+	protected override async Task OnInitializedAsync()
+	{
+		try
+		{
+		var members = await GoogleSheetsService.GetMembers();
+		_members = members.OrderBy(x => x.Number).AsQueryable();
+		}
+		catch (Exception)
+		{
+			// ignored
+		}
+	}
+}

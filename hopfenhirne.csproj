@@ -4,9 +4,11 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>9b852d99-b110-4286-8061-91da706153c5</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Google.Apis.Sheets.v4" Version="1.68.0.3658" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.0-rc.1.24452.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="9.0.0-rc.1.24452.1" PrivateAssets="all" />
   </ItemGroup>
