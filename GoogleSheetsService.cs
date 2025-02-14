@@ -17,7 +17,7 @@ public class GoogleSheetsService
             
       var service = new Google.Apis.Sheets.v4.SheetsService(initializer);
                 
-      var result = await service.Spreadsheets.Values.Get("1-FmJ9lWEBgSp_JKDoCLgXaCGqb_n1iCB0iYvTpFvFTI", "A9:H36").ExecuteAsync();
+      var result = await service.Spreadsheets.Values.Get("1-FmJ9lWEBgSp_JKDoCLgXaCGqb_n1iCB0iYvTpFvFTI", "A9:G36").ExecuteAsync();
 
       var members = new List<Member>();
       foreach (var row in result.Values)
@@ -27,7 +27,7 @@ public class GoogleSheetsService
           var numberOfParticipations = Convert.ToInt32(row[2]);
           var numberOfQuizParticipations =Convert.ToInt32( row[3]);
           var numberOfQuizWins = Convert.ToInt32(row[4]);
-          var numberOfQuizHostings =Convert.ToInt32(row[7]);
+          var numberOfQuizHostings =Convert.ToInt32(row[6]);
           var member = new Member(name, number, numberOfParticipations, numberOfQuizParticipations, numberOfQuizWins,
               numberOfQuizHostings);
 
