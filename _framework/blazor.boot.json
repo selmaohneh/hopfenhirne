@@ -1,13 +1,13 @@
 {
   "mainAssemblyName": "hopfenhirne",
   "resources": {
-    "hash": "sha256-lLbu56BYCcklq/vGveKDDLDwQuC5enz4fSfmSyY9kIg=",
+    "hash": "sha256-lXCYoUZfF3geUqPJ0QRJUcanQbVOwLLxel8wYuiZ8rQ=",
     "fingerprinting": {
       "Google.Apis.Auth.hdutbzzhln.wasm": "Google.Apis.Auth.wasm",
       "Google.Apis.Core.8jboq7vato.wasm": "Google.Apis.Core.wasm",
       "Google.Apis.Sheets.v4.fkbdjj8k9o.wasm": "Google.Apis.Sheets.v4.wasm",
       "Google.Apis.lux08il168.wasm": "Google.Apis.wasm",
-      "hopfenhirne.mihto26qb6.wasm": "hopfenhirne.wasm",
+      "hopfenhirne.vagwyfhn4l.wasm": "hopfenhirne.wasm",
       "Microsoft.AspNetCore.Components.d00x86i8sk.wasm": "Microsoft.AspNetCore.Components.wasm",
       "Microsoft.AspNetCore.Components.Web.9dzh98v6yu.wasm": "Microsoft.AspNetCore.Components.Web.wasm",
       "Microsoft.AspNetCore.Components.WebAssembly.ps61y4dg8s.wasm": "Microsoft.AspNetCore.Components.WebAssembly.wasm",
@@ -111,7 +111,7 @@
       "Google.Apis.Core.8jboq7vato.wasm": "sha256-ZJbUx6BHuzcdqeDElFsJ1+cYzyTyVisWXwQWJjMxixY=",
       "Google.Apis.Sheets.v4.fkbdjj8k9o.wasm": "sha256-MeXmP1RtZPfbjsqw9wN4uN8FRJ0IwoWAoV4I1tQ/C34=",
       "Google.Apis.lux08il168.wasm": "sha256-XcsNSetbd049F/SxdqrKodylx/hxhc7VhTmTARzfCH4=",
-      "hopfenhirne.mihto26qb6.wasm": "sha256-7j0h8a41zjQOlkaterGnk+X9NrnaeE3LMeLi6WoUTh0=",
+      "hopfenhirne.vagwyfhn4l.wasm": "sha256-eReSziGTT0rUi9oPMzFM53Fq2m9mAqP+GeUev2jdYW0=",
       "Microsoft.AspNetCore.Components.d00x86i8sk.wasm": "sha256-TX7R9HEs6NR/q2/1XCI8rgcfzxl0Iqs4arelvFwqWWQ=",
       "Microsoft.AspNetCore.Components.Web.9dzh98v6yu.wasm": "sha256-TQbr/lhdyH1uUfo1h04bAKA1wO6FOm5KihWmCjQ+Fto=",
       "Microsoft.AspNetCore.Components.WebAssembly.ps61y4dg8s.wasm": "sha256-qZpCMJMzT7JRZBZLT3Mw6JrRCurvgmJ0j4afk5/NfGw=",
