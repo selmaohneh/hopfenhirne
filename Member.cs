@@ -19,7 +19,7 @@ public record Member(
                 return Double.NaN;
             }
             
-            return 100 * NumberOfQuizWins / (double)NumberOfParticipations;
+            return 100 * NumberOfQuizWins / (double)NumberOfQuizParticipations;
         }
     }
     
