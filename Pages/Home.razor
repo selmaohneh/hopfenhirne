@@ -25,7 +25,6 @@
 	<table class="table">
 		<thead>
 		<tr>
-			<th>#</th>
 			<th>Name</th>
 			<th>Teilnahmen</th>
 			<th>Winrate [%]</th>
@@ -35,7 +34,6 @@
 		@foreach (var member in _members)
 		{
 		<tr>
-			<td>@member.Number</td>
 			<td>@member.Name</td>
 			<td>@member.NumberOfParticipations</td>
 			<td>@member.WinRatePlot()</td>
