@@ -54,7 +54,7 @@
 		try
 		{
 		var members = await GoogleSheetsService.GetMembers();
-		_members = members.OrderBy(x => x.Number).AsQueryable();
+		_members = members.OrderByDescending(x => x.NumberOfParticipations).AsQueryable();
 		}
 		catch (Exception)
 		{
