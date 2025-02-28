@@ -7,30 +7,19 @@
     <title>Die Hopfenhirne</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <style>
+        /* Base styling */
         body {
-            font-family: Arial, sans-serif;
+            margin: 0;
             padding: 20px;
-        }
-
-        #dataTable {
-            margin-top: 20px;
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        #dataTable th,
-        #dataTable td {
-            border: 1px solid #ddd;
-            padding: 8px;
-        }
-
-        #dataTable th {
-            background-color: #f2f2f2;
+            font-family: Arial, sans-serif;
+            background-color: #000; /* black background to match the icon */
+            color: #fff;
         }
 
         .center-container {
             display: flex;
             justify-content: center;
+            margin: 2rem 0;
         }
 
         .center-container img {
@@ -39,22 +28,79 @@
             width: auto;
             height: auto;
         }
+
+        /* Table styling inspired by the icon colors (gold & green on black) */
+        #dataTable {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 2rem;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        /* Table header uses a gradient from gold to green */
+        #dataTable thead tr {
+            background: linear-gradient(to right, #c8a633, #98d836); 
+            color: #000; /* black text for contrast on gold/green */
+        }
+
+        #dataTable th,
+        #dataTable td {
+            text-align: left;
+            padding: 0.75rem;
+        }
+
+        #dataTable th {
+            font-weight: bold;
+        }
+
+        /* Body rows: black background with dark gray stripes, gold/green borders */
+        #dataTable tbody tr {
+            background-color: #1f1f1f;
+            border-bottom: 1px solid #98d836;
+            transition: background-color 0.3s ease;
+        }
+
+        #dataTable tbody tr:nth-child(even) {
+            background-color: #2a2a2a;
+        }
+
+        /* Hover effect row background in slightly brighter gray */
+        #dataTable tbody tr:hover {
+            background-color: #3d3d3d;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            #dataTable th,
+            #dataTable td {
+                padding: 0.4rem;
+                font-size: 0.9rem;
+            }
+        }
     </style>
 </head>
 
 <body>
-
-
     <div class="center-container">
         <img src="icon.png" alt="Die Hopfenhirne">
     </div>
 
-    <table id="dataTable"></table>
+    <table id="dataTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Teilnahmen</th>
+                <th>Winrate [%]</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
 
     <script>
         async function getSheetData(sheetId, range, apiKey) {
             const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`;
-
             try {
                 const response = await fetch(url);
                 if (!response.ok) {
@@ -67,52 +113,34 @@
                 return null;
             }
         }
-        window.onload = async () => {
 
+        window.onload = async () => {
             const sheetId = '1-FmJ9lWEBgSp_JKDoCLgXaCGqb_n1iCB0iYvTpFvFTI';
             const range = 'A9:G36';
-
             // read-only and application-specific. so no secret.
             const apiKey = 'AIzaSyBmw6wobcTsfQdqt__CA9zg_VIGvQgIYaQ';
 
-            data = await getSheetData(sheetId, range, apiKey);
+            const data = await getSheetData(sheetId, range, apiKey);
             if (data) {
-                const table = document.getElementById('dataTable');
-                table.innerHTML = '';
+                const tableBody = document.querySelector('#dataTable tbody');
+                tableBody.innerHTML = '';
 
-                const headerRow = document.createElement('tr');
+                // Sort data descending by column index 2 (participations)
+                const sortedData = data.sort((x, y) => y[2] - x[2]);
 
-                header = document.createElement('th');
-                header.textContent = "Name";
-                headerRow.appendChild(header);
-
-                header = document.createElement('th');
-                header.textContent = "Teilnahmen";
-                headerRow.appendChild(header);
-
-                header = document.createElement('th');
-                header.textContent = "Winrate [%]";
-                headerRow.appendChild(header);
-
-                table.appendChild(headerRow);
-
-                data = data.sort((x,y) => y[2] - x[2]);
-
-                for (let i = 0; i < data.length; i++) {
-
-                    name = data[i][0];
+                for (let i = 0; i < sortedData.length; i++) {
+                    const name = sortedData[i][0];
                     if (!name) continue;
 
-                    participations = data[i][2];
+                    const participations = sortedData[i][2];
                     if (participations < 3) continue;
 
-                    winRate = data[i][5];
+                    const winRate = sortedData[i][5];
                     if (!winRate) continue;
-
 
                     const row = document.createElement('tr');
 
-                    cell = document.createElement('td');
+                    let cell = document.createElement('td');
                     cell.textContent = name;
                     row.appendChild(cell);
 
@@ -124,13 +152,10 @@
                     cell.textContent = winRate;
                     row.appendChild(cell);
 
-                    table.appendChild(row);
+                    tableBody.appendChild(row);
                 }
             }
         }
-
     </script>
-
 </body>
-
 </html>
