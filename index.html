@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Die Hopfenhirne</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        #dataTable {
+            margin-top: 20px;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        #dataTable th,
+        #dataTable td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #dataTable th {
+            background-color: #f2f2f2;
+        }
+
+        .center-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .center-container img {
+            max-height: 50vh;
+            max-width: 50vh;
+            width: auto;
+            height: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div class="center-container">
+        <img src="icon.png" alt="Die Hopfenhirne">
+    </div>
+
+    <table id="dataTable"></table>
+
+    <script>
+        async function getSheetData(sheetId, range, apiKey) {
+            const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`;
+
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                return data.values;
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                return null;
+            }
+        }
+        window.onload = async () => {
+
+            const sheetId = '1-FmJ9lWEBgSp_JKDoCLgXaCGqb_n1iCB0iYvTpFvFTI';
+            const range = 'A9:G36';
+
+            // read-only and application-specific. so no secret.
+            const apiKey = 'AIzaSyBmw6wobcTsfQdqt__CA9zg_VIGvQgIYaQ';
+
+            const data = await getSheetData(sheetId, range, apiKey);
+            if (data) {
+                const table = document.getElementById('dataTable');
+                table.innerHTML = '';
+
+                const headerRow = document.createElement('tr');
+
+                header = document.createElement('th');
+                header.textContent = "Name";
+                headerRow.appendChild(header);
+
+                header = document.createElement('th');
+                header.textContent = "Teilnahmen";
+                headerRow.appendChild(header);
+
+                header = document.createElement('th');
+                header.textContent = "Winrate [%]";
+                headerRow.appendChild(header);
+
+                table.appendChild(headerRow);
+
+                for (let i = 0; i < data.length; i++) {
+
+                    name = data[i][0];
+                    if (!name) continue;
+
+                    participations = data[i][2];
+                    if (participations < 3) continue;
+
+                    winRate = data[i][5];
+                    if (!winRate) continue;
+
+
+                    const row = document.createElement('tr');
+
+                    cell = document.createElement('td');
+                    cell.textContent = name;
+                    row.appendChild(cell);
+
+                    cell = document.createElement('td');
+                    cell.textContent = participations;
+                    row.appendChild(cell);
+
+                    cell = document.createElement('td');
+                    cell.textContent = winRate;
+                    row.appendChild(cell);
+
+                    table.appendChild(row);
+                }
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>
