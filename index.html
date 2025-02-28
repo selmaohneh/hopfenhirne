@@ -75,7 +75,7 @@
             // read-only and application-specific. so no secret.
             const apiKey = 'AIzaSyBmw6wobcTsfQdqt__CA9zg_VIGvQgIYaQ';
 
-            const data = await getSheetData(sheetId, range, apiKey);
+            data = await getSheetData(sheetId, range, apiKey);
             if (data) {
                 const table = document.getElementById('dataTable');
                 table.innerHTML = '';
@@ -95,6 +95,8 @@
                 headerRow.appendChild(header);
 
                 table.appendChild(headerRow);
+
+                data = data.sort((x,y) => y[2] - x[2]);
 
                 for (let i = 0; i < data.length; i++) {
 
