@@ -29,7 +29,7 @@
             height: auto;
         }
 
-        /* Table styling inspired by the icon colors (gold & green on black) */
+        /* Data table styling */
         #dataTable {
             width: 100%;
             border-collapse: separate;
@@ -39,10 +39,9 @@
             overflow: hidden;
         }
 
-        /* Table header uses a gradient from gold to green */
         #dataTable thead tr {
-            background: linear-gradient(to right, #c8a633, #98d836); 
-            color: #000; /* black text for contrast on gold/green */
+            background: linear-gradient(to right, #c8a633, #98d836);
+            color: #000;
         }
 
         #dataTable th,
@@ -55,7 +54,6 @@
             font-weight: bold;
         }
 
-        /* Body rows: black background with dark gray stripes, gold/green borders */
         #dataTable tbody tr {
             background-color: #1f1f1f;
             border-bottom: 1px solid #98d836;
@@ -66,15 +64,55 @@
             background-color: #2a2a2a;
         }
 
-        /* Hover effect row background in slightly brighter gray */
         #dataTable tbody tr:hover {
+            background-color: #3d3d3d;
+        }
+
+        /* Events table styling */
+        #eventsTable {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 2rem;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        #eventsTable thead tr {
+            background: linear-gradient(to right, #c8a633, #98d836);
+            color: #000;
+        }
+
+        #eventsTable th,
+        #eventsTable td {
+            text-align: left;
+            padding: 0.75rem;
+        }
+
+        #eventsTable th {
+            font-weight: bold;
+        }
+
+        #eventsTable tbody tr {
+            background-color: #1f1f1f;
+            border-bottom: 1px solid #98d836;
+            transition: background-color 0.3s ease;
+        }
+
+        #eventsTable tbody tr:nth-child(even) {
+            background-color: #2a2a2a;
+        }
+
+        #eventsTable tbody tr:hover {
             background-color: #3d3d3d;
         }
 
         /* Responsive adjustments */
         @media (max-width: 600px) {
             #dataTable th,
-            #dataTable td {
+            #dataTable td,
+            #eventsTable th,
+            #eventsTable td {
                 padding: 0.4rem;
                 font-size: 0.9rem;
             }
@@ -87,6 +125,21 @@
         <img src="icon.png" alt="Die Hopfenhirne">
     </div>
 
+    <h2>Upcoming Events:</h2>
+    <table id="eventsTable">
+        <thead>
+            <tr>
+                <th>Datum</th>
+                <th>Uhrzeit</th>
+                <th>Event</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <br/>
+
+    <h2>Statistiken:</h2>
     <table id="dataTable">
         <thead>
             <tr>
@@ -116,11 +169,46 @@
 
         window.onload = async () => {
             const sheetId = '1-FmJ9lWEBgSp_JKDoCLgXaCGqb_n1iCB0iYvTpFvFTI';
-            const range = 'A9:G36';
+            let range = 'events!A1:C10';
             // read-only and application-specific. so no secret.
             const apiKey = 'AIzaSyBmw6wobcTsfQdqt__CA9zg_VIGvQgIYaQ';
 
-            const data = await getSheetData(sheetId, range, apiKey);
+            let data = await getSheetData(sheetId, range, apiKey);
+            if (data) {
+                const tableBody = document.querySelector('#eventsTable tbody');
+                tableBody.innerHTML = '';
+
+                for (let i = 0; i < data.length; i++) {
+                    const date = data[i][0];
+                    if (!date) continue;
+
+                    const time = data[i][1];
+                    if (!time) continue;
+
+                    const event = data[i][2];
+                    if (!event) continue;
+
+                    const row = document.createElement('tr');
+
+                    let cell = document.createElement('td');
+                    cell.textContent = date;
+                    row.appendChild(cell);
+
+                    cell = document.createElement('td');
+                    cell.textContent = time;
+                    row.appendChild(cell);
+
+                    cell = document.createElement('td');
+                    cell.textContent = event;
+                    row.appendChild(cell);
+
+                    tableBody.appendChild(row);
+                }
+            }
+
+            range = 'stats!A9:G36';
+
+            data = await getSheetData(sheetId, range, apiKey);
             if (data) {
                 const tableBody = document.querySelector('#dataTable tbody');
                 tableBody.innerHTML = '';
