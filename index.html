@@ -213,8 +213,8 @@
                 const tableBody = document.querySelector('#dataTable tbody');
                 tableBody.innerHTML = '';
 
-                // Sort data descending by column index 2 (participations)
-                const sortedData = data.sort((x, y) => y[2] - x[2]);
+                // Sort data descending by column index 5 (win rate)
+                const sortedData = data.filter(x => {return x[5] && x[5].trim() !== "";}).sort((x, y) => parseFloat(y[5].replace(",", ".")) - parseFloat(x[5].replace(",", ".")));
 
                 for (let i = 0; i < sortedData.length; i++) {
                     const name = sortedData[i][0];
