@@ -7,13 +7,29 @@
     <title>Die Hopfenhirne</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <style>
+        /* Import modern font */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
         /* Base styling */
         body {
             margin: 0;
             padding: 20px;
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background-color: #000; /* black background to match the icon */
             color: #fff;
+        }
+
+        /* Modern heading styling */
+        h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+            background: linear-gradient(to right, #c8a633, #98d836);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .center-container {
@@ -107,12 +123,53 @@
             background-color: #3d3d3d;
         }
 
+        /* Aktuelles table styling */
+        #aktuellesTable {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 2rem;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        #aktuellesTable thead tr {
+            background: linear-gradient(to right, #c8a633, #98d836);
+            color: #000;
+        }
+
+        #aktuellesTable th,
+        #aktuellesTable td {
+            text-align: left;
+            padding: 0.75rem;
+        }
+
+        #aktuellesTable th {
+            font-weight: bold;
+        }
+
+        #aktuellesTable tbody tr {
+            background-color: #1f1f1f;
+            border-bottom: 1px solid #98d836;
+            transition: background-color 0.3s ease;
+        }
+
+        #aktuellesTable tbody tr:nth-child(even) {
+            background-color: #2a2a2a;
+        }
+
+        #aktuellesTable tbody tr:hover {
+            background-color: #3d3d3d;
+        }
+
         /* Responsive adjustments */
         @media (max-width: 600px) {
             #dataTable th,
             #dataTable td,
             #eventsTable th,
-            #eventsTable td {
+            #eventsTable td,
+            #aktuellesTable th,
+            #aktuellesTable td {
                 padding: 0.4rem;
                 font-size: 0.9rem;
             }
@@ -124,6 +181,19 @@
     <div class="center-container">
         <img src="icon.png" alt="Die Hopfenhirne">
     </div>
+
+    <h2>Aktuelles:</h2>
+    <table id="aktuellesTable">
+        <thead>
+            <tr>
+                <th>Kategorie</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <br/>
 
     <h2>Upcoming Events:</h2>
     <table id="eventsTable">
@@ -167,11 +237,102 @@
             }
         }
 
+        async function updateAktuellesTable(sheetId, apiKey) {
+            // Fetch data from the stats sheet to get Hopfenhirn des Monats info
+            // Row 4: Hopfenhirn des Monats names
+            // Rows 5, 6, 7: Quiz Gewinner (1st, 2nd, 3rd place)
+            // Row 9: Dates
+            const range = 'stats!A4:AZ9';
+            const data = await getSheetData(sheetId, range, apiKey);
+
+            const tableBody = document.querySelector('#aktuellesTable tbody');
+
+            if (!data || data.length < 6) {
+                tableBody.innerHTML = '<tr><td colspan="2">Keine Daten verfügbar</td></tr>';
+                return;
+            }
+
+            const hopfenhirnRow = data[0]; // Row 4
+            const quizWinner1Row = data[1]; // Row 5
+            const quizWinner2Row = data[2]; // Row 6
+            const quizWinner3Row = data[3]; // Row 7
+            const datesRow = data[5]; // Row 9
+
+            // Find the last date in the past
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            let lastPastDateIndex = -1;
+            let lastPastDate = null;
+
+            for (let i = 0; i < datesRow.length; i++) {
+                if (!datesRow[i]) continue;
+
+                // Parse date in format dd.MM.yy
+                const dateParts = datesRow[i].trim().split('.');
+                if (dateParts.length !== 3) continue;
+
+                const day = parseInt(dateParts[0]);
+                const month = parseInt(dateParts[1]) - 1; // Month is 0-indexed
+                const year = parseInt(dateParts[2]) + 2000; // 2-digit year, add 2000
+
+                const date = new Date(year, month, day);
+                date.setHours(0, 0, 0, 0);
+
+                if (date <= today) {
+                    if (!lastPastDate || date > lastPastDate) {
+                        lastPastDate = date;
+                        lastPastDateIndex = i;
+                    }
+                }
+            }
+
+            if (lastPastDateIndex === -1) {
+                tableBody.innerHTML = '<tr><td colspan="2">Keine Daten verfügbar</td></tr>';
+                return;
+            }
+
+            // Extract data from the found column
+            const hopfenhirn = hopfenhirnRow[lastPastDateIndex] || 'N/A';
+            const winner1 = quizWinner1Row[lastPastDateIndex] || '';
+            const winner2 = quizWinner2Row[lastPastDateIndex] || '';
+            const winner3 = quizWinner3Row[lastPastDateIndex] || '';
+
+            // Build table rows
+            tableBody.innerHTML = '';
+
+            // Add Quiz-Champions row (all winners comma-separated)
+            const winners = [winner1, winner2, winner3].filter(w => w);
+            if (winners.length > 0) {
+                const winnerRowElement = document.createElement('tr');
+                let cell = document.createElement('td');
+                cell.textContent = 'Quiz-Champions des Monats';
+                winnerRowElement.appendChild(cell);
+                cell = document.createElement('td');
+                cell.textContent = winners.join(', ');
+                winnerRowElement.appendChild(cell);
+                tableBody.appendChild(winnerRowElement);
+            }
+
+            // Add Hopfenhirn des Monats row
+            const hopfenhirnRowElement = document.createElement('tr');
+            let cell = document.createElement('td');
+            cell.textContent = 'Hopfenhirn des Monats';
+            hopfenhirnRowElement.appendChild(cell);
+            cell = document.createElement('td');
+            cell.textContent = hopfenhirn;
+            hopfenhirnRowElement.appendChild(cell);
+            tableBody.appendChild(hopfenhirnRowElement);
+        }
+
         window.onload = async () => {
             const sheetId = '1-FmJ9lWEBgSp_JKDoCLgXaCGqb_n1iCB0iYvTpFvFTI';
             let range = 'events!A1:C10';
             // read-only and application-specific. so no secret.
             const apiKey = 'AIzaSyBmw6wobcTsfQdqt__CA9zg_VIGvQgIYaQ';
+
+            // Update the Aktuelles table
+            await updateAktuellesTable(sheetId, apiKey);
 
             let data = await getSheetData(sheetId, range, apiKey);
             if (data) {
