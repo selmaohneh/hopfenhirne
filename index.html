@@ -280,7 +280,12 @@
                 date.setHours(0, 0, 0, 0);
 
                 if (date <= today) {
-                    if (!lastPastDate || date > lastPastDate) {
+                    // Check if this date has actual data (at least one of the quiz winners or hopfenhirn)
+                    const hasWinner = quizWinner1Row[i] && quizWinner1Row[i].trim() !== '';
+                    const hasHopfenhirn = hopfenhirnRow[i] && hopfenhirnRow[i].trim() !== '';
+
+                    // Only use this date if it has data
+                    if ((hasWinner || hasHopfenhirn) && (!lastPastDate || date > lastPastDate)) {
                         lastPastDate = date;
                         lastPastDateIndex = i;
                     }
