@@ -17,6 +17,7 @@ def main():
         "quizmaster_count": 0,
         "hopfenhirn_des_monats_count": 0,
         "wins": 0,
+        "played_events": 0,
         "winrate": 0.0
     })
 
@@ -31,12 +32,19 @@ def main():
             with open(json_file, 'r', encoding='utf-8') as f:
                 event_data = json.load(f)
 
+            quizmasters = event_data.get("quizmasters", [])
+            has_quiz = len(quizmasters) > 0
+
             # Count attendances
             for attendee in event_data.get("attendees", []):
                 stats[attendee]["attendances"] += 1
 
+                # Count events where person played (was not quizmaster and there was a quiz)
+                if has_quiz and attendee not in quizmasters:
+                    stats[attendee]["played_events"] += 1
+
             # Count quizmasters
-            for quizmaster in event_data.get("quizmasters", []):
+            for quizmaster in quizmasters:
                 stats[quizmaster]["quizmaster_count"] += 1
 
             # Count winners (all winners in the list)
@@ -51,14 +59,12 @@ def main():
         except Exception as e:
             continue
 
-    # Calculate win rates (exclude attendances where they were quizmaster)
+    # Calculate win rates (only count events where they actually played)
     for person, person_stats in stats.items():
-        attendances = person_stats["attendances"]
-        quizmaster_count = person_stats["quizmaster_count"]
-        played_count = attendances - quizmaster_count
+        played_events = person_stats["played_events"]
 
-        if played_count > 0:
-            person_stats["winrate"] = round(person_stats["wins"] / played_count, 4)
+        if played_events > 0:
+            person_stats["winrate"] = round(person_stats["wins"] / played_events, 4)
         else:
             person_stats["winrate"] = 0.0
 
