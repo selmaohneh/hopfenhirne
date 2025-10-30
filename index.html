@@ -427,7 +427,8 @@
                         .filter(person => person.played_events >= 3);
 
                     // Sort by winrate descending (default)
-                    sortStatsTable('winrate');
+                    statsArray.sort((a, b) => b.winrate - a.winrate);
+                    renderStatsTable(statsArray);
 
                     // Add click handlers to headers
                     const headers = document.querySelectorAll('#dataTable thead tr th');
