@@ -32,11 +32,13 @@ def main():
             with open(json_file, 'r', encoding='utf-8') as f:
                 event_data = json.load(f)
 
+            attendees = event_data.get("attendees", [])
             quizmasters = event_data.get("quizmasters", [])
+            winners = event_data.get("winners", [])
             has_quiz = len(quizmasters) > 0
 
             # Count attendances
-            for attendee in event_data.get("attendees", []):
+            for attendee in attendees:
                 stats[attendee]["attendances"] += 1
 
                 # Count events where person played (was not quizmaster and there was a quiz)
@@ -47,9 +49,11 @@ def main():
             for quizmaster in quizmasters:
                 stats[quizmaster]["quizmaster_count"] += 1
 
-            # Count winners (all winners in the list)
-            for winner in event_data.get("winners", []):
-                stats[winner]["wins"] += 1
+            # Count wins (only when there was a quiz, person was attendee, and not quizmaster)
+            if has_quiz:
+                for winner in winners:
+                    if winner in attendees and winner not in quizmasters:
+                        stats[winner]["wins"] += 1
 
             # Count hopfenhirn des monats
             hopfenhirn = event_data.get("hopfenhirn_des_monats")
