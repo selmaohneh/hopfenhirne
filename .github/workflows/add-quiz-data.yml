@@ -1,0 +1,162 @@
+name: Add Quiz Data
+
+on:
+  workflow_dispatch:
+    inputs:
+      date:
+        description: 'Date of the event (format: YYYY-MM-DD)'
+        required: true
+        type: string
+      attendees:
+        description: 'List of attendee names (comma-separated)'
+        required: true
+        type: string
+      quizmasters:
+        description: 'List of quizmaster names (comma-separated, leave empty if none)'
+        required: false
+        type: string
+      winners:
+        description: 'List of quiz winner names (comma-separated, in order of placement, leave empty if none)'
+        required: false
+        type: string
+      hopfenhirn_des_monats:
+        description: 'Name of Hopfenhirn des Monats (leave empty if none)'
+        required: false
+        type: string
+
+jobs:
+  create-data-file:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Create branch
+        run: |
+          BRANCH_NAME="quiz-data-${{ inputs.date }}"
+          # Replace dots and slashes with dashes for valid branch name
+          BRANCH_NAME=$(echo "$BRANCH_NAME" | sed 's/[\.\/]/-/g')
+
+          # Check if branch exists remotely
+          if git ls-remote --heads origin "$BRANCH_NAME" | grep -q "$BRANCH_NAME"; then
+            echo "Branch exists, checking out"
+            git fetch origin "$BRANCH_NAME"
+            git checkout "$BRANCH_NAME"
+          else
+            echo "Creating new branch"
+            git checkout -b "$BRANCH_NAME"
+          fi
+
+          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
+
+      - name: Create data directory
+        run: mkdir -p data
+
+      - name: Create JSON file
+        run: |
+          # Convert comma-separated lists to JSON arrays
+          ATTENDEES=$(echo '${{ inputs.attendees }}' | jq -R 'split(",") | map(ltrimstr(" ") | rtrimstr(" ")) | map(select(length > 0))')
+
+          # Handle optional fields
+          if [ -n "${{ inputs.quizmasters }}" ]; then
+            QUIZMASTERS=$(echo '${{ inputs.quizmasters }}' | jq -R 'split(",") | map(ltrimstr(" ") | rtrimstr(" ")) | map(select(length > 0))')
+          else
+            QUIZMASTERS="[]"
+          fi
+
+          if [ -n "${{ inputs.winners }}" ]; then
+            WINNERS=$(echo '${{ inputs.winners }}' | jq -R 'split(",") | map(ltrimstr(" ") | rtrimstr(" ")) | map(select(length > 0))')
+          else
+            WINNERS="[]"
+          fi
+
+          if [ -n "${{ inputs.hopfenhirn_des_monats }}" ]; then
+            HOPFENHIRN=$(echo '${{ inputs.hopfenhirn_des_monats }}' | jq -R '.')
+          else
+            HOPFENHIRN="null"
+          fi
+
+          # Create JSON file
+          cat > "data/${{ inputs.date }}.json" << EOF
+          {
+            "date": "${{ inputs.date }}",
+            "attendees": $ATTENDEES,
+            "quizmasters": $QUIZMASTERS,
+            "winners": $WINNERS,
+            "hopfenhirn_des_monats": $HOPFENHIRN
+          }
+          EOF
+
+          # Pretty print the JSON file
+          jq '.' "data/${{ inputs.date }}.json" > temp.json
+          mv temp.json "data/${{ inputs.date }}.json"
+
+      - name: Commit changes
+        run: |
+          git add "data/${{ inputs.date }}.json"
+
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+            echo "HAS_CHANGES=false" >> $GITHUB_ENV
+          else
+            git commit -m "Add quiz data for ${{ inputs.date }}"
+            git push -u origin "$BRANCH_NAME"
+            echo "HAS_CHANGES=true" >> $GITHUB_ENV
+          fi
+
+      - name: Create or update Pull Request
+        if: env.HAS_CHANGES == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # Check if PR already exists
+          PR_NUMBER=$(gh pr list --head "$BRANCH_NAME" --json number --jq '.[0].number')
+
+          # Build PR body with optional fields
+          PR_BODY="**Quiz Data for ${{ inputs.date }}**
+
+          This PR adds/updates the quiz data file for the event on ${{ inputs.date }}.
+
+          **Details:**
+          - **Date:** ${{ inputs.date }}
+          - **Attendees:** ${{ inputs.attendees }}"
+
+          if [ -n "${{ inputs.quizmasters }}" ]; then
+            PR_BODY="$PR_BODY
+          - **Quizmasters:** ${{ inputs.quizmasters }}"
+          fi
+
+          if [ -n "${{ inputs.winners }}" ]; then
+            PR_BODY="$PR_BODY
+          - **Winners:** ${{ inputs.winners }}"
+          fi
+
+          if [ -n "${{ inputs.hopfenhirn_des_monats }}" ]; then
+            PR_BODY="$PR_BODY
+          - **Hopfenhirn des Monats:** ${{ inputs.hopfenhirn_des_monats }}"
+          fi
+
+          PR_BODY="$PR_BODY
+
+          ---
+          *Automatically generated by GitHub Actions*"
+
+          if [ -n "$PR_NUMBER" ]; then
+            echo "Updating existing PR #$PR_NUMBER"
+            gh pr edit "$PR_NUMBER" --body "$PR_BODY"
+          else
+            echo "Creating new PR"
+            gh pr create \
+              --title "Add quiz data for ${{ inputs.date }}" \
+              --body "$PR_BODY" \
+              --base master
+          fi
