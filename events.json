@@ -3,5 +3,20 @@
     "date": "2025-11-19",
     "time": "18:00",
     "name": "Stammtisch"
+  },
+  {
+    "date": "2025-12-27",
+    "time": "17:00",
+    "name": "Weihnachtsstammtisch mit Bierwichteln"
+  },
+  {
+    "date": "2026-01-15",
+    "time": "18:00",
+    "name": "Stammtisch"
+  },
+  {
+    "date": "2026-02-12",
+    "time": "18:00",
+    "name": "Stammtisch"
   }
 ]
