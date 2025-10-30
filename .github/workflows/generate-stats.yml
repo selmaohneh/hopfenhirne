@@ -28,14 +28,11 @@ jobs:
         run: |
           BRANCH_NAME="update-stats"
 
-          if git ls-remote --heads origin "$BRANCH_NAME" | grep -q "$BRANCH_NAME"; then
-            git fetch origin "$BRANCH_NAME"
-            git checkout "$BRANCH_NAME"
-            # Merge latest master to ensure we have all recent data changes
-            git merge origin/master --no-edit
-          else
-            git checkout -b "$BRANCH_NAME"
-          fi
+          # Delete remote branch if it exists to start fresh
+          git push origin --delete "$BRANCH_NAME" || true
+
+          # Create fresh branch from master
+          git checkout -b "$BRANCH_NAME"
 
           echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
 
@@ -52,7 +49,7 @@ jobs:
             git commit -m "Update stats.json"
           fi
 
-          # Always push the branch (will do nothing if no changes)
+          # Push the fresh branch
           git push -u origin "$BRANCH_NAME"
 
       - name: Create or update Pull Request
