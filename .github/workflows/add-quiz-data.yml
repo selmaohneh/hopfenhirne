@@ -1,4 +1,4 @@
-name: Add Quiz Data
+name: Add event data
 
 on:
   workflow_dispatch:
@@ -42,7 +42,7 @@ jobs:
 
       - name: Create branch
         run: |
-          BRANCH_NAME="quiz-data-${{ inputs.date }}"
+          BRANCH_NAME="event-data-${{ inputs.date }}"
           # Replace dots and slashes with dashes for valid branch name
           BRANCH_NAME=$(echo "$BRANCH_NAME" | sed 's/[\.\/]/-/g')
 
@@ -108,7 +108,7 @@ jobs:
             echo "No changes to commit"
             echo "HAS_CHANGES=false" >> $GITHUB_ENV
           else
-            git commit -m "Add quiz data for ${{ inputs.date }}"
+            git commit -m "Add event data for ${{ inputs.date }}"
             git push -u origin "$BRANCH_NAME"
             echo "HAS_CHANGES=true" >> $GITHUB_ENV
           fi
@@ -122,9 +122,9 @@ jobs:
           PR_NUMBER=$(gh pr list --head "$BRANCH_NAME" --json number --jq '.[0].number')
 
           # Build PR body with optional fields
-          PR_BODY="**Quiz Data for ${{ inputs.date }}**
+          PR_BODY="**Event data for ${{ inputs.date }}**
 
-          This PR adds/updates the quiz data file for the event on ${{ inputs.date }}.
+          This PR adds/updates the event data file for the event on ${{ inputs.date }}.
 
           **Details:**
           - **Date:** ${{ inputs.date }}
@@ -156,7 +156,7 @@ jobs:
           else
             echo "Creating new PR"
             gh pr create \
-              --title "Add quiz data for ${{ inputs.date }}" \
+              --title "Add event data for ${{ inputs.date }}" \
               --body "$PR_BODY" \
               --base master
           fi
