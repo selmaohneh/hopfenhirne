@@ -68,6 +68,22 @@
 
         #dataTable th {
             font-weight: bold;
+            cursor: pointer;
+            user-select: none;
+            position: relative;
+        }
+
+        #dataTable th:hover {
+            background: linear-gradient(to right, #d4b040, #a5e042);
+        }
+
+        #dataTable th.sorted::after {
+            content: ' ▼';
+            font-size: 0.8em;
+        }
+
+        #dataTable th.sorted.asc::after {
+            content: ' ▲';
         }
 
         #dataTable tbody tr {
@@ -322,42 +338,106 @@
             }
 
             // Load statistics from local stats.json file
+            let statsArray = [];
+            let currentSort = { column: 'winrate', ascending: false };
+
+            function renderStatsTable(data) {
+                const tableBody = document.querySelector('#dataTable tbody');
+                tableBody.innerHTML = '';
+
+                for (const person of data) {
+                    const row = document.createElement('tr');
+
+                    let cell = document.createElement('td');
+                    cell.textContent = person.name;
+                    row.appendChild(cell);
+
+                    cell = document.createElement('td');
+                    cell.textContent = person.attendances;
+                    row.appendChild(cell);
+
+                    cell = document.createElement('td');
+                    cell.textContent = (person.winrate * 100).toFixed(2);
+                    row.appendChild(cell);
+
+                    cell = document.createElement('td');
+                    cell.textContent = person.hopfenhirn_des_monats_count;
+                    row.appendChild(cell);
+
+                    tableBody.appendChild(row);
+                }
+
+                // Update header sort indicators
+                document.querySelectorAll('#dataTable th').forEach(th => {
+                    th.classList.remove('sorted', 'asc');
+                });
+
+                const columnMap = {
+                    0: 'name',
+                    1: 'attendances',
+                    2: 'winrate',
+                    3: 'hopfenhirn_des_monats_count'
+                };
+
+                const headerIndex = Object.keys(columnMap).find(key => columnMap[key] === currentSort.column);
+                if (headerIndex !== undefined) {
+                    const header = document.querySelector(`#dataTable thead tr th:nth-child(${parseInt(headerIndex) + 1})`);
+                    header.classList.add('sorted');
+                    if (currentSort.ascending) {
+                        header.classList.add('asc');
+                    }
+                }
+            }
+
+            function sortStatsTable(column) {
+                // Toggle direction if clicking same column
+                if (currentSort.column === column) {
+                    currentSort.ascending = !currentSort.ascending;
+                } else {
+                    currentSort.column = column;
+                    currentSort.ascending = false;
+                }
+
+                statsArray.sort((a, b) => {
+                    let valA = a[column];
+                    let valB = b[column];
+
+                    // Handle string comparison for name
+                    if (column === 'name') {
+                        valA = valA.toLowerCase();
+                        valB = valB.toLowerCase();
+                        return currentSort.ascending ? valA.localeCompare(valB) : valB.localeCompare(valA);
+                    }
+
+                    // Numeric comparison
+                    return currentSort.ascending ? valA - valB : valB - valA;
+                });
+
+                renderStatsTable(statsArray);
+            }
+
             try {
                 const statsResponse = await fetch('stats.json');
                 if (statsResponse.ok) {
                     const statsData = await statsResponse.json();
-                    const tableBody = document.querySelector('#dataTable tbody');
-                    tableBody.innerHTML = '';
 
                     // Convert to array and filter for played_events >= 3
-                    const statsArray = Object.entries(statsData)
+                    statsArray = Object.entries(statsData)
                         .map(([name, stats]) => ({ name, ...stats }))
                         .filter(person => person.played_events >= 3);
 
-                    // Sort by winrate descending
-                    statsArray.sort((a, b) => b.winrate - a.winrate);
+                    // Sort by winrate descending (default)
+                    sortStatsTable('winrate');
 
-                    for (const person of statsArray) {
-                        const row = document.createElement('tr');
+                    // Add click handlers to headers
+                    const headers = document.querySelectorAll('#dataTable thead tr th');
+                    const columnMap = ['name', 'attendances', 'winrate', 'hopfenhirn_des_monats_count'];
 
-                        let cell = document.createElement('td');
-                        cell.textContent = person.name;
-                        row.appendChild(cell);
-
-                        cell = document.createElement('td');
-                        cell.textContent = person.attendances;
-                        row.appendChild(cell);
-
-                        cell = document.createElement('td');
-                        cell.textContent = (person.winrate * 100).toFixed(2);
-                        row.appendChild(cell);
-
-                        cell = document.createElement('td');
-                        cell.textContent = person.hopfenhirn_des_monats_count;
-                        row.appendChild(cell);
-
-                        tableBody.appendChild(row);
-                    }
+                    headers.forEach((header, index) => {
+                        header.addEventListener('click', () => {
+                            sortStatsTable(columnMap[index]);
+                        });
+                    });
                 }
             } catch (error) {
                 console.error('Error loading stats:', error);
