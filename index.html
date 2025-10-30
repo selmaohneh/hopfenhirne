@@ -239,21 +239,6 @@
     </table>
 
     <script>
-        async function getSheetData(sheetId, range, apiKey) {
-            const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`;
-            try {
-                const response = await fetch(url);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const data = await response.json();
-                return data.values;
-            } catch (error) {
-                console.error('Error fetching data:', error);
-                return null;
-            }
-        }
-
         async function updateAktuellesTable() {
             const tableBody = document.querySelector('#aktuellesTable tbody');
 
@@ -296,45 +281,42 @@
         }
 
         window.onload = async () => {
-            const sheetId = '1-FmJ9lWEBgSp_JKDoCLgXaCGqb_n1iCB0iYvTpFvFTI';
-            let range = 'events!A1:C10';
-            // read-only and application-specific. so no secret.
-            const apiKey = 'AIzaSyBmw6wobcTsfQdqt__CA9zg_VIGvQgIYaQ';
-
             // Update the Aktuelles table
             await updateAktuellesTable();
 
-            let data = await getSheetData(sheetId, range, apiKey);
-            if (data) {
-                const tableBody = document.querySelector('#eventsTable tbody');
-                tableBody.innerHTML = '';
+            // Load events from local events.json file
+            try {
+                const eventsResponse = await fetch('events.json');
+                if (eventsResponse.ok) {
+                    const events = await eventsResponse.json();
+                    const tableBody = document.querySelector('#eventsTable tbody');
+                    tableBody.innerHTML = '';
 
-                for (let i = 0; i < data.length; i++) {
-                    const date = data[i][0];
-                    if (!date) continue;
+                    // Events are already sorted by date ascending in the JSON
+                    for (const event of events) {
+                        const row = document.createElement('tr');
 
-                    const time = data[i][1];
-                    if (!time) continue;
+                        // Convert date from YYYY-MM-DD to DD.MM.YYYY
+                        const dateParts = event.date.split('-');
+                        const formattedDate = `${dateParts[2]}.${dateParts[1]}.${dateParts[0]}`;
 
-                    const event = data[i][2];
-                    if (!event) continue;
+                        let cell = document.createElement('td');
+                        cell.textContent = formattedDate;
+                        row.appendChild(cell);
 
-                    const row = document.createElement('tr');
+                        cell = document.createElement('td');
+                        cell.textContent = event.time;
+                        row.appendChild(cell);
 
-                    let cell = document.createElement('td');
-                    cell.textContent = date;
-                    row.appendChild(cell);
+                        cell = document.createElement('td');
+                        cell.textContent = event.name;
+                        row.appendChild(cell);
 
-                    cell = document.createElement('td');
-                    cell.textContent = time;
-                    row.appendChild(cell);
-
-                    cell = document.createElement('td');
-                    cell.textContent = event;
-                    row.appendChild(cell);
-
-                    tableBody.appendChild(row);
+                        tableBody.appendChild(row);
+                    }
                 }
+            } catch (error) {
+                console.error('Error loading events:', error);
             }
 
             // Load statistics from local stats.json file
