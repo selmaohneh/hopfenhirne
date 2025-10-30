@@ -31,6 +31,8 @@ jobs:
           if git ls-remote --heads origin "$BRANCH_NAME" | grep -q "$BRANCH_NAME"; then
             git fetch origin "$BRANCH_NAME"
             git checkout "$BRANCH_NAME"
+            # Merge latest master to ensure we have all recent data changes
+            git merge origin/master --no-edit
           else
             git checkout -b "$BRANCH_NAME"
           fi
