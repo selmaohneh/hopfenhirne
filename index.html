@@ -216,6 +216,7 @@
                 <th>Name</th>
                 <th>Teilnahmen</th>
                 <th>Winrate [%]</th>
+                <th>Hopfenhirn des Monats</th>
             </tr>
         </thead>
         <tbody></tbody>
@@ -237,97 +238,45 @@
             }
         }
 
-        async function updateAktuellesTable(sheetId, apiKey) {
-            // Fetch data from the stats sheet to get Hopfenhirn des Monats info
-            // Row 4: Hopfenhirn des Monats names
-            // Rows 5, 6, 7: Quiz Gewinner (1st, 2nd, 3rd place)
-            // Row 9: Dates
-            const range = 'stats!A4:AZ9';
-            const data = await getSheetData(sheetId, range, apiKey);
-
+        async function updateAktuellesTable() {
             const tableBody = document.querySelector('#aktuellesTable tbody');
 
-            if (!data || data.length < 6) {
-                tableBody.innerHTML = '<tr><td colspan="2">Keine Daten verfügbar</td></tr>';
-                return;
-            }
-
-            const hopfenhirnRow = data[0]; // Row 4
-            const quizWinner1Row = data[1]; // Row 5
-            const quizWinner2Row = data[2]; // Row 6
-            const quizWinner3Row = data[3]; // Row 7
-            const datesRow = data[5]; // Row 9
-
-            // Find the last date in the past
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-
-            let lastPastDateIndex = -1;
-            let lastPastDate = null;
-
-            for (let i = 0; i < datesRow.length; i++) {
-                if (!datesRow[i]) continue;
-
-                // Parse date in format dd.MM.yy
-                const dateParts = datesRow[i].trim().split('.');
-                if (dateParts.length !== 3) continue;
-
-                const day = parseInt(dateParts[0]);
-                const month = parseInt(dateParts[1]) - 1; // Month is 0-indexed
-                const year = parseInt(dateParts[2]) + 2000; // 2-digit year, add 2000
-
-                const date = new Date(year, month, day);
-                date.setHours(0, 0, 0, 0);
-
-                if (date <= today) {
-                    // Check if this date has actual data (at least one of the quiz winners or hopfenhirn)
-                    const hasWinner = quizWinner1Row[i] && quizWinner1Row[i].trim() !== '';
-                    const hasHopfenhirn = hopfenhirnRow[i] && hopfenhirnRow[i].trim() !== '';
-
-                    // Only use this date if it has data
-                    if ((hasWinner || hasHopfenhirn) && (!lastPastDate || date > lastPastDate)) {
-                        lastPastDate = date;
-                        lastPastDateIndex = i;
-                    }
+            try {
+                const response = await fetch('monthly.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
-            }
+                const monthlyData = await response.json();
 
-            if (lastPastDateIndex === -1) {
+                tableBody.innerHTML = '';
+
+                // Add Quiz-Champions row if there are winners
+                if (monthlyData.winners && monthlyData.winners.length > 0) {
+                    const winnerRowElement = document.createElement('tr');
+                    let cell = document.createElement('td');
+                    cell.textContent = 'Quiz-Champions des Monats';
+                    winnerRowElement.appendChild(cell);
+                    cell = document.createElement('td');
+                    cell.textContent = monthlyData.winners.join(', ');
+                    winnerRowElement.appendChild(cell);
+                    tableBody.appendChild(winnerRowElement);
+                }
+
+                // Add Hopfenhirn des Monats row
+                if (monthlyData.hopfenhirn_des_monats) {
+                    const hopfenhirnRowElement = document.createElement('tr');
+                    let cell = document.createElement('td');
+                    cell.textContent = 'Hopfenhirn des Monats';
+                    hopfenhirnRowElement.appendChild(cell);
+                    cell = document.createElement('td');
+                    cell.textContent = monthlyData.hopfenhirn_des_monats;
+                    hopfenhirnRowElement.appendChild(cell);
+                    tableBody.appendChild(hopfenhirnRowElement);
+                }
+            } catch (error) {
+                console.error('Error loading monthly data:', error);
                 tableBody.innerHTML = '<tr><td colspan="2">Keine Daten verfügbar</td></tr>';
-                return;
             }
-
-            // Extract data from the found column
-            const hopfenhirn = hopfenhirnRow[lastPastDateIndex] || 'N/A';
-            const winner1 = quizWinner1Row[lastPastDateIndex] || '';
-            const winner2 = quizWinner2Row[lastPastDateIndex] || '';
-            const winner3 = quizWinner3Row[lastPastDateIndex] || '';
-
-            // Build table rows
-            tableBody.innerHTML = '';
-
-            // Add Quiz-Champions row (all winners comma-separated)
-            const winners = [winner1, winner2, winner3].filter(w => w);
-            if (winners.length > 0) {
-                const winnerRowElement = document.createElement('tr');
-                let cell = document.createElement('td');
-                cell.textContent = 'Quiz-Champions des Monats';
-                winnerRowElement.appendChild(cell);
-                cell = document.createElement('td');
-                cell.textContent = winners.join(', ');
-                winnerRowElement.appendChild(cell);
-                tableBody.appendChild(winnerRowElement);
-            }
-
-            // Add Hopfenhirn des Monats row
-            const hopfenhirnRowElement = document.createElement('tr');
-            let cell = document.createElement('td');
-            cell.textContent = 'Hopfenhirn des Monats';
-            hopfenhirnRowElement.appendChild(cell);
-            cell = document.createElement('td');
-            cell.textContent = hopfenhirn;
-            hopfenhirnRowElement.appendChild(cell);
-            tableBody.appendChild(hopfenhirnRowElement);
         }
 
         window.onload = async () => {
@@ -337,7 +286,7 @@
             const apiKey = 'AIzaSyBmw6wobcTsfQdqt__CA9zg_VIGvQgIYaQ';
 
             // Update the Aktuelles table
-            await updateAktuellesTable(sheetId, apiKey);
+            await updateAktuellesTable();
 
             let data = await getSheetData(sheetId, range, apiKey);
             if (data) {
@@ -372,42 +321,46 @@
                 }
             }
 
-            range = 'stats!A10:G37';
+            // Load statistics from local stats.json file
+            try {
+                const statsResponse = await fetch('stats.json');
+                if (statsResponse.ok) {
+                    const statsData = await statsResponse.json();
+                    const tableBody = document.querySelector('#dataTable tbody');
+                    tableBody.innerHTML = '';
 
-            data = await getSheetData(sheetId, range, apiKey);
-            if (data) {
-                const tableBody = document.querySelector('#dataTable tbody');
-                tableBody.innerHTML = '';
+                    // Convert to array and filter for played_events >= 3
+                    const statsArray = Object.entries(statsData)
+                        .map(([name, stats]) => ({ name, ...stats }))
+                        .filter(person => person.played_events >= 3);
 
-                // Sort data descending by column index 5 (win rate)
-                const sortedData = data.filter(x => {return x[5] && x[5].trim() !== "";}).sort((x, y) => parseFloat(y[5].replace(",", ".")) - parseFloat(x[5].replace(",", ".")));
+                    // Sort by winrate descending
+                    statsArray.sort((a, b) => b.winrate - a.winrate);
 
-                for (let i = 0; i < sortedData.length; i++) {
-                    const name = sortedData[i][0];
-                    if (!name) continue;
+                    for (const person of statsArray) {
+                        const row = document.createElement('tr');
 
-                    const participations = sortedData[i][2];
-                    if (participations < 3) continue;
+                        let cell = document.createElement('td');
+                        cell.textContent = person.name;
+                        row.appendChild(cell);
 
-                    const winRate = sortedData[i][5];
-                    if (!winRate) continue;
+                        cell = document.createElement('td');
+                        cell.textContent = person.attendances;
+                        row.appendChild(cell);
 
-                    const row = document.createElement('tr');
+                        cell = document.createElement('td');
+                        cell.textContent = (person.winrate * 100).toFixed(2);
+                        row.appendChild(cell);
 
-                    let cell = document.createElement('td');
-                    cell.textContent = name;
-                    row.appendChild(cell);
+                        cell = document.createElement('td');
+                        cell.textContent = person.hopfenhirn_des_monats_count;
+                        row.appendChild(cell);
 
-                    cell = document.createElement('td');
-                    cell.textContent = participations;
-                    row.appendChild(cell);
-
-                    cell = document.createElement('td');
-                    cell.textContent = winRate;
-                    row.appendChild(cell);
-
-                    tableBody.appendChild(row);
+                        tableBody.appendChild(row);
+                    }
                 }
+            } catch (error) {
+                console.error('Error loading stats:', error);
             }
         }
     </script>
