@@ -231,7 +231,9 @@
             <tr>
                 <th>Name</th>
                 <th>Teilnahmen</th>
+                <th>Quiz Teilnahmen</th>
                 <th>Winrate [%]</th>
+                <th>Quizmaster</th>
                 <th>Hopfenhirn des Monats</th>
             </tr>
         </thead>
@@ -339,7 +341,15 @@
                     row.appendChild(cell);
 
                     cell = document.createElement('td');
+                    cell.textContent = person.played_events;
+                    row.appendChild(cell);
+
+                    cell = document.createElement('td');
                     cell.textContent = (person.winrate * 100).toFixed(2);
+                    row.appendChild(cell);
+
+                    cell = document.createElement('td');
+                    cell.textContent = person.quizmaster_count;
                     row.appendChild(cell);
 
                     cell = document.createElement('td');
@@ -357,8 +367,10 @@
                 const columnMap = {
                     0: 'name',
                     1: 'attendances',
-                    2: 'winrate',
-                    3: 'hopfenhirn_des_monats_count'
+                    2: 'played_events',
+                    3: 'winrate',
+                    4: 'quizmaster_count',
+                    5: 'hopfenhirn_des_monats_count'
                 };
 
                 const headerIndex = Object.keys(columnMap).find(key => columnMap[key] === currentSort.column);
@@ -414,7 +426,7 @@
 
                     // Add click handlers to headers
                     const headers = document.querySelectorAll('#dataTable thead tr th');
-                    const columnMap = ['name', 'attendances', 'winrate', 'hopfenhirn_des_monats_count'];
+                    const columnMap = ['name', 'attendances', 'played_events', 'winrate', 'quizmaster_count', 'hopfenhirn_des_monats_count'];
 
                     headers.forEach((header, index) => {
                         header.addEventListener('click', () => {
