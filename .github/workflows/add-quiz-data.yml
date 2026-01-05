@@ -35,6 +35,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
       - name: Set up Git
         run: |
           git config user.name "github-actions[bot]"
@@ -100,15 +105,20 @@ jobs:
           jq '.' "data/${{ inputs.date }}.json" > temp.json
           mv temp.json "data/${{ inputs.date }}.json"
 
+      - name: Update monthly and stats
+        run: |
+          python generate_monthly.py
+          python generate_stats.py
+
       - name: Commit changes
         run: |
-          git add "data/${{ inputs.date }}.json"
+          git add "data/${{ inputs.date }}.json" monthly.json stats.json
 
           if git diff --staged --quiet; then
             echo "No changes to commit"
             echo "HAS_CHANGES=false" >> $GITHUB_ENV
           else
-            git commit -m "Add event data for ${{ inputs.date }}"
+            git commit -m "Add event data and update monthly/stats for ${{ inputs.date }}"
             git push -u origin "$BRANCH_NAME"
             echo "HAS_CHANGES=true" >> $GITHUB_ENV
           fi
@@ -125,6 +135,11 @@ jobs:
           PR_BODY="**Event data for ${{ inputs.date }}**
 
           This PR adds/updates the event data file for the event on ${{ inputs.date }}.
+
+          This PR includes:
+          - Added/updated event data file
+          - Updated monthly.json with latest winners
+          - Updated stats.json with latest statistics
 
           **Details:**
           - **Date:** ${{ inputs.date }}

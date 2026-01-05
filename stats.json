@@ -1,59 +1,59 @@
 {
   "Whizzy": {
-    "attendances": 26,
+    "attendances": 27,
     "quizmaster_count": 5,
     "hopfenhirn_des_monats_count": 0,
     "wins": 4,
-    "played_events": 19,
-    "winrate": 0.2105
+    "played_events": 20,
+    "winrate": 0.2
   },
   "Cello": {
-    "attendances": 25,
+    "attendances": 26,
     "quizmaster_count": 6,
     "hopfenhirn_des_monats_count": 0,
     "wins": 5,
-    "played_events": 17,
-    "winrate": 0.2941
+    "played_events": 18,
+    "winrate": 0.2778
   },
   "Luca": {
-    "attendances": 23,
+    "attendances": 24,
     "quizmaster_count": 4,
     "hopfenhirn_des_monats_count": 0,
     "wins": 9,
-    "played_events": 18,
-    "winrate": 0.5
+    "played_events": 19,
+    "winrate": 0.4737
   },
   "Eric": {
+    "attendances": 15,
+    "quizmaster_count": 2,
+    "hopfenhirn_des_monats_count": 0,
+    "wins": 3,
+    "played_events": 13,
+    "winrate": 0.2308
+  },
+  "Dennis M.": {
     "attendances": 14,
     "quizmaster_count": 2,
+    "hopfenhirn_des_monats_count": 1,
+    "wins": 6,
+    "played_events": 12,
+    "winrate": 0.5
+  },
+  "Dennis G.": {
+    "attendances": 13,
+    "quizmaster_count": 1,
     "hopfenhirn_des_monats_count": 0,
     "wins": 3,
     "played_events": 12,
     "winrate": 0.25
   },
-  "Dennis M.": {
-    "attendances": 13,
-    "quizmaster_count": 2,
+  "Fabsi": {
+    "attendances": 12,
+    "quizmaster_count": 1,
     "hopfenhirn_des_monats_count": 0,
     "wins": 6,
     "played_events": 11,
     "winrate": 0.5455
-  },
-  "Dennis G.": {
-    "attendances": 12,
-    "quizmaster_count": 1,
-    "hopfenhirn_des_monats_count": 0,
-    "wins": 3,
-    "played_events": 11,
-    "winrate": 0.2727
-  },
-  "Fabsi": {
-    "attendances": 11,
-    "quizmaster_count": 1,
-    "hopfenhirn_des_monats_count": 0,
-    "wins": 6,
-    "played_events": 10,
-    "winrate": 0.6
   },
   "Christian": {
     "attendances": 9,
@@ -64,17 +64,25 @@
     "winrate": 0.3333
   },
   "Toni": {
-    "attendances": 7,
+    "attendances": 8,
     "quizmaster_count": 2,
     "hopfenhirn_des_monats_count": 0,
-    "wins": 1,
-    "played_events": 5,
-    "winrate": 0.2
+    "wins": 2,
+    "played_events": 6,
+    "winrate": 0.3333
   },
   "Sterni": {
     "attendances": 5,
     "quizmaster_count": 0,
     "hopfenhirn_des_monats_count": 0,
+    "wins": 1,
+    "played_events": 5,
+    "winrate": 0.2
+  },
+  "Arthur": {
+    "attendances": 5,
+    "quizmaster_count": 0,
+    "hopfenhirn_des_monats_count": 2,
     "wins": 1,
     "played_events": 5,
     "winrate": 0.2
@@ -87,13 +95,13 @@
     "played_events": 4,
     "winrate": 0.5
   },
-  "Arthur": {
+  "Lenny": {
     "attendances": 4,
     "quizmaster_count": 0,
-    "hopfenhirn_des_monats_count": 2,
+    "hopfenhirn_des_monats_count": 0,
     "wins": 1,
-    "played_events": 4,
-    "winrate": 0.25
+    "played_events": 3,
+    "winrate": 0.3333
   },
   "Marius": {
     "attendances": 4,
@@ -111,13 +119,13 @@
     "played_events": 2,
     "winrate": 1.0
   },
-  "Lenny": {
+  "Philipp": {
     "attendances": 3,
     "quizmaster_count": 0,
     "hopfenhirn_des_monats_count": 0,
     "wins": 1,
-    "played_events": 2,
-    "winrate": 0.5
+    "played_events": 3,
+    "winrate": 0.3333
   },
   "Max": {
     "attendances": 3,
@@ -127,6 +135,14 @@
     "played_events": 2,
     "winrate": 0.5
   },
+  "Joost": {
+    "attendances": 3,
+    "quizmaster_count": 2,
+    "hopfenhirn_des_monats_count": 0,
+    "wins": 0,
+    "played_events": 1,
+    "winrate": 0.0
+  },
   "Torben": {
     "attendances": 2,
     "quizmaster_count": 0,
@@ -134,6 +150,14 @@
     "wins": 2,
     "played_events": 2,
     "winrate": 1.0
+  },
+  "Nico": {
+    "attendances": 2,
+    "quizmaster_count": 0,
+    "hopfenhirn_des_monats_count": 0,
+    "wins": 1,
+    "played_events": 2,
+    "winrate": 0.5
   },
   "Jan": {
     "attendances": 2,
@@ -143,23 +167,7 @@
     "played_events": 2,
     "winrate": 0.5
   },
-  "Joost": {
-    "attendances": 2,
-    "quizmaster_count": 1,
-    "hopfenhirn_des_monats_count": 0,
-    "wins": 0,
-    "played_events": 1,
-    "winrate": 0.0
-  },
   "Roya": {
-    "attendances": 2,
-    "quizmaster_count": 0,
-    "hopfenhirn_des_monats_count": 0,
-    "wins": 0,
-    "played_events": 2,
-    "winrate": 0.0
-  },
-  "Philipp": {
     "attendances": 2,
     "quizmaster_count": 0,
     "hopfenhirn_des_monats_count": 0,
@@ -175,14 +183,6 @@
     "played_events": 1,
     "winrate": 1.0
   },
-  "Nico": {
-    "attendances": 1,
-    "quizmaster_count": 0,
-    "hopfenhirn_des_monats_count": 0,
-    "wins": 0,
-    "played_events": 1,
-    "winrate": 0.0
-  },
   "Yanneck": {
     "attendances": 1,
     "quizmaster_count": 0,
@@ -192,6 +192,22 @@
     "winrate": 0.0
   },
   "Marc": {
+    "attendances": 1,
+    "quizmaster_count": 0,
+    "hopfenhirn_des_monats_count": 0,
+    "wins": 0,
+    "played_events": 1,
+    "winrate": 0.0
+  },
+  "Tobi": {
+    "attendances": 1,
+    "quizmaster_count": 0,
+    "hopfenhirn_des_monats_count": 0,
+    "wins": 0,
+    "played_events": 1,
+    "winrate": 0.0
+  },
+  "Nico B.": {
     "attendances": 1,
     "quizmaster_count": 0,
     "hopfenhirn_des_monats_count": 0,
