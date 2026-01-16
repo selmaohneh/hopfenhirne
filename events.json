@@ -10,8 +10,13 @@
     "name": "Stammtisch"
   },
   {
+    "date": "2026-03-12",
+    "time": "18:00",
+    "name": "Stammtisch"
+  },
+  {
     "date": "2026-04-14",
     "time": "18:00",
     "name": "Stammtisch"
-  }
+  },
 ]
