@@ -381,52 +381,6 @@
             font-weight: 600;
         }
 
-        /* Collapsible instructions */
-        .collapsible {
-            margin-top: 1rem;
-        }
-
-        .collapsible-toggle {
-            background: none;
-            border: none;
-            color: #98d836;
-            cursor: pointer;
-            font-family: inherit;
-            font-size: 0.9rem;
-            padding: 0;
-            text-decoration: underline;
-        }
-
-        .collapsible-content {
-            display: none;
-            margin-top: 1rem;
-            padding: 1rem;
-            background-color: #2a2a2a;
-            border-radius: 0.375rem;
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-
-        .collapsible-content.open {
-            display: block;
-        }
-
-        .collapsible-content ol {
-            margin: 0;
-            padding-left: 1.25rem;
-        }
-
-        .collapsible-content li {
-            margin-bottom: 0.5rem;
-        }
-
-        .collapsible-content code {
-            background-color: #1f1f1f;
-            padding: 0.125rem 0.375rem;
-            border-radius: 0.25rem;
-            font-size: 0.85em;
-        }
-
         /* Responsive */
         @media (max-width: 600px) {
             body {
@@ -507,21 +461,6 @@
         </div>
         <button class="btn btn-primary" style="width: 100%;" onclick="login()">Login</button>
 
-        <div class="collapsible">
-            <button class="collapsible-toggle" onclick="toggleInstructions()">Wie erstelle ich einen PAT?</button>
-            <div id="patInstructions" class="collapsible-content">
-                <ol>
-                    <li>Gehe zu <a href="https://github.com/settings/tokens?type=beta" target="_blank">GitHub Token Settings</a></li>
-                    <li>Klicke auf <strong>"Generate new token"</strong></li>
-                    <li>Token name: <code>Hopfenhirne Admin</code></li>
-                    <li>Expiration: 90 Tage (oder nach Wunsch)</li>
-                    <li>Repository access: <strong>"Only select repositories"</strong> &rarr; <code>selmaohneh/hopfenhirne</code></li>
-                    <li>Permissions: <strong>"Actions"</strong> &rarr; <strong>"Read and write"</strong></li>
-                    <li>Alles andere: No access</li>
-                    <li>Klicke <strong>"Generate token"</strong> und kopiere den Token</li>
-                </ol>
-            </div>
-        </div>
     </div>
 
     <!-- Admin Panel -->
@@ -1011,12 +950,6 @@
 
             btn.disabled = false;
             btn.textContent = 'Quiz-Daten hinzufuegen';
-        }
-
-        // Toggle PAT instructions
-        function toggleInstructions() {
-            const content = document.getElementById('patInstructions');
-            content.classList.toggle('open');
         }
 
         // Helper functions
