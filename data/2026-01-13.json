@@ -1,0 +1,17 @@
+{
+  "date": "2026-01-13",
+  "attendees": [
+    "Luca",
+    "Fabsi",
+    "Marc",
+    "Testi"
+  ],
+  "quizmasters": [
+    "Fabsi",
+    "Luca"
+  ],
+  "winners": [
+    "Testi"
+  ],
+  "hopfenhirn_des_monats": "Testi"
+}

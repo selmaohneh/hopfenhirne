@@ -16,8 +16,8 @@
     "winrate": 0.2778
   },
   "Luca": {
-    "attendances": 24,
-    "quizmaster_count": 4,
+    "attendances": 25,
+    "quizmaster_count": 5,
     "hopfenhirn_des_monats_count": 0,
     "wins": 9,
     "played_events": 19,
@@ -39,6 +39,14 @@
     "played_events": 12,
     "winrate": 0.5
   },
+  "Fabsi": {
+    "attendances": 13,
+    "quizmaster_count": 2,
+    "hopfenhirn_des_monats_count": 0,
+    "wins": 6,
+    "played_events": 11,
+    "winrate": 0.5455
+  },
   "Dennis G.": {
     "attendances": 13,
     "quizmaster_count": 1,
@@ -46,14 +54,6 @@
     "wins": 3,
     "played_events": 12,
     "winrate": 0.25
-  },
-  "Fabsi": {
-    "attendances": 12,
-    "quizmaster_count": 1,
-    "hopfenhirn_des_monats_count": 0,
-    "wins": 6,
-    "played_events": 11,
-    "winrate": 0.5455
   },
   "Christian": {
     "attendances": 9,
@@ -167,6 +167,14 @@
     "played_events": 2,
     "winrate": 0.5
   },
+  "Marc": {
+    "attendances": 2,
+    "quizmaster_count": 0,
+    "hopfenhirn_des_monats_count": 0,
+    "wins": 0,
+    "played_events": 2,
+    "winrate": 0.0
+  },
   "Roya": {
     "attendances": 2,
     "quizmaster_count": 0,
@@ -183,15 +191,15 @@
     "played_events": 1,
     "winrate": 1.0
   },
-  "Yanneck": {
+  "Testi": {
     "attendances": 1,
     "quizmaster_count": 0,
-    "hopfenhirn_des_monats_count": 0,
-    "wins": 0,
+    "hopfenhirn_des_monats_count": 1,
+    "wins": 1,
     "played_events": 1,
-    "winrate": 0.0
+    "winrate": 1.0
   },
-  "Marc": {
+  "Yanneck": {
     "attendances": 1,
     "quizmaster_count": 0,
     "hopfenhirn_des_monats_count": 0,
