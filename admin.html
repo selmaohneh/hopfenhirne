@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de-DE">
 
 <head>
     <meta charset="UTF-8">
@@ -467,26 +467,15 @@
     <div id="adminPanel" class="container hidden">
         <h1>Hopfenhirne Admin</h1>
 
-        <!-- Status Bar -->
-        <div class="status-bar">
-            <div class="status-indicator">
-                <div class="status-dot"></div>
-                <span>Verbunden</span>
-            </div>
-            <button class="btn btn-secondary btn-small" onclick="logout()">Logout</button>
-        </div>
-
-        <!-- Message Area -->
-        <div id="adminMessage" class="message"></div>
 
         <!-- Tabs -->
         <div class="tabs">
-            <button class="tab active" onclick="switchTab('event')">Event hinzufuegen</button>
-            <button class="tab" onclick="switchTab('quiz')">Quiz-Daten hinzufuegen</button>
+            <button class="tab active" onclick="switchTab('quiz')">Quiz-Daten hinzufuegen</button>
+            <button class="tab" onclick="switchTab('event')">Event hinzufuegen</button>
         </div>
 
         <!-- Add Event Form -->
-        <div id="eventForm" class="form-section active">
+        <div id="eventForm" class="form-section">
             <h2>Neues Event</h2>
             <div class="form-group">
                 <label for="eventDate">Datum *</label>
@@ -501,10 +490,13 @@
                 <input type="text" id="eventName" value="Stammtisch">
             </div>
             <button class="btn btn-primary" onclick="submitEvent()" id="submitEventBtn">Event hinzufuegen</button>
+
+            <!-- Message Area for Event Form -->
+            <div id="eventMessage" class="message"></div>
         </div>
 
         <!-- Add Quiz Data Form -->
-        <div id="quizForm" class="form-section">
+        <div id="quizForm" class="form-section active">
             <h2>Quiz-Daten</h2>
 
             <div class="form-group">
@@ -523,31 +515,23 @@
 
             <div class="form-group">
                 <label>Quizmaster (aus Teilnehmern)</label>
-                <p class="info-text">Waehle zuerst Teilnehmer aus</p>
                 <div id="quizmastersGrid" class="checkbox-grid"></div>
             </div>
 
             <div class="form-group">
-                <label>
-                    Gewinner (1., 2., 3. Platz)
-                    <button class="clear-btn" onclick="clearWinners()">Zuruecksetzen</button>
-                </label>
-                <p class="info-text">Klicke in der Reihenfolge der Platzierung (Quizmaster sind ausgeschlossen)</p>
-                <div id="winnersGrid" class="winner-grid"></div>
-                <div id="selectedWinners" class="selected-winners hidden">
-                    <span id="winner1"></span>
-                    <span id="winner2"></span>
-                    <span id="winner3"></span>
-                </div>
+                <label>Gewinner</label>
+                <div id="winnersGrid" class="checkbox-grid"></div>
             </div>
 
             <div class="form-group">
                 <label>Hopfenhirn des Monats</label>
-                <p class="info-text">Waehle aus den Teilnehmern (ohne Quizmaster)</p>
                 <div id="hopfenhirnGrid" class="radio-grid"></div>
             </div>
 
             <button class="btn btn-primary" onclick="submitQuizData()" id="submitQuizBtn">Quiz-Daten hinzufuegen</button>
+
+            <!-- Message Area for Quiz Form -->
+            <div id="quizMessage" class="message"></div>
         </div>
     </div>
 
@@ -558,11 +542,14 @@
         let members = [];
         let selectedAttendees = new Set();
         let selectedQuizmasters = new Set();
-        let winners = []; // Array of up to 3 winners in order
+        let selectedWinners = new Set(); // Changed from ordered array to Set
         let selectedHopfenhirn = null;
 
         // Initialize
         document.addEventListener('DOMContentLoaded', async () => {
+            // Set German locale for date/time inputs
+            document.documentElement.lang = 'de-DE';
+
             // Check for existing token
             const token = sessionStorage.getItem('github_pat');
             if (token) {
@@ -656,7 +643,7 @@
                 selectedAttendees.delete(name);
                 // Also remove from quizmasters, winners, hopfenhirn if selected
                 selectedQuizmasters.delete(name);
-                winners = winners.filter(w => w !== name);
+                selectedWinners.delete(name);
                 if (selectedHopfenhirn === name) selectedHopfenhirn = null;
             } else {
                 selectedAttendees.add(name);
@@ -692,7 +679,7 @@
             } else {
                 selectedQuizmasters.add(name);
                 // Remove from winners if they were selected
-                winners = winners.filter(w => w !== name);
+                selectedWinners.delete(name);
                 if (selectedHopfenhirn === name) selectedHopfenhirn = null;
             }
             renderQuizmastersGrid();
@@ -709,53 +696,27 @@
 
             if (eligible.length === 0) {
                 grid.innerHTML = '<p style="color: #666; padding: 0.5rem;">Keine Teilnehmer verfuegbar (oder alle sind Quizmaster)</p>';
-                document.getElementById('selectedWinners').classList.add('hidden');
                 return;
             }
 
-            grid.innerHTML = eligible.map(name => {
-                const winnerIndex = winners.indexOf(name);
-                const winnerClass = winnerIndex >= 0 ? `winner-${winnerIndex + 1}` : '';
-                const isDisabled = winners.length >= 3 && winnerIndex < 0;
-
-                return `
-                    <div class="winner-item ${winnerClass} ${isDisabled ? 'disabled' : ''}"
-                         onclick="${isDisabled ? '' : `toggleWinner('${escapeHtml(name)}')`}">
-                        <span>${escapeHtml(name)}</span>
-                        <div class="badge">${winnerIndex >= 0 ? winnerIndex + 1 : ''}</div>
-                    </div>
-                `;
-            }).join('');
-
-            // Update selected winners display
-            const display = document.getElementById('selectedWinners');
-            if (winners.length > 0) {
-                display.classList.remove('hidden');
-                document.getElementById('winner1').textContent = winners[0] ? `1. ${winners[0]}` : '';
-                document.getElementById('winner2').textContent = winners[1] ? `2. ${winners[1]}` : '';
-                document.getElementById('winner3').textContent = winners[2] ? `3. ${winners[2]}` : '';
-            } else {
-                display.classList.add('hidden');
-            }
+            grid.innerHTML = eligible.map(name => `
+                <label class="checkbox-item ${selectedWinners.has(name) ? 'selected' : ''}" data-name="${name}">
+                    <input type="checkbox" ${selectedWinners.has(name) ? 'checked' : ''} onchange="toggleWinner('${escapeHtml(name)}')">
+                    <span>${escapeHtml(name)}</span>
+                </label>
+            `).join('');
         }
 
         // Toggle winner selection
         function toggleWinner(name) {
-            const index = winners.indexOf(name);
-            if (index >= 0) {
-                // Remove this winner and shift others
-                winners.splice(index, 1);
-            } else if (winners.length < 3) {
-                winners.push(name);
+            if (selectedWinners.has(name)) {
+                selectedWinners.delete(name);
+            } else {
+                selectedWinners.add(name);
             }
             renderWinnersGrid();
         }
 
-        // Clear winners
-        function clearWinners() {
-            winners = [];
-            renderWinnersGrid();
-        }
 
         // Render Hopfenhirn grid (attendees minus quizmasters)
         function renderHopfenhirnGrid() {
@@ -809,21 +770,22 @@
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.form-section').forEach(f => f.classList.remove('active'));
 
-            if (tab === 'event') {
+            if (tab === 'quiz') {
                 document.querySelector('.tabs .tab:first-child').classList.add('active');
-                document.getElementById('eventForm').classList.add('active');
+                document.getElementById('quizForm').classList.add('active');
             } else {
                 document.querySelector('.tabs .tab:last-child').classList.add('active');
-                document.getElementById('quizForm').classList.add('active');
+                document.getElementById('eventForm').classList.add('active');
             }
 
             // Clear any messages
-            hideMessage(document.getElementById('adminMessage'));
+            hideMessage(document.getElementById('eventMessage'));
+            hideMessage(document.getElementById('quizMessage'));
         }
 
         // Submit event
         async function submitEvent() {
-            const messageDiv = document.getElementById('adminMessage');
+            const messageDiv = document.getElementById('eventMessage');
             const btn = document.getElementById('submitEventBtn');
 
             const date = document.getElementById('eventDate').value;
@@ -879,13 +841,13 @@
 
         // Submit quiz data
         async function submitQuizData() {
-            const messageDiv = document.getElementById('adminMessage');
+            const messageDiv = document.getElementById('quizMessage');
             const btn = document.getElementById('submitQuizBtn');
 
             const date = document.getElementById('quizDate').value;
             const attendees = Array.from(selectedAttendees).join(', ');
             const quizmasters = Array.from(selectedQuizmasters).join(', ');
-            const winnersStr = winners.join(', ');
+            const winnersStr = Array.from(selectedWinners).join(', ');
             const hopfenhirn = selectedHopfenhirn || '';
 
             if (!date) {
@@ -934,7 +896,7 @@
                     document.getElementById('quizDate').value = '';
                     selectedAttendees.clear();
                     selectedQuizmasters.clear();
-                    winners = [];
+                    selectedWinners.clear();
                     selectedHopfenhirn = null;
                     renderAttendeesGrid();
                     renderQuizmastersGrid();
