@@ -1,0 +1,22 @@
+{
+  "date": "2026-02-12",
+  "attendees": [
+    "Arthur",
+    "Cello",
+    "Eric",
+    "Whizzy",
+    "Toni",
+    "Max",
+    "Lenny",
+    "Luca",
+    "Eike"
+  ],
+  "quizmasters": [
+    "Cello"
+  ],
+  "winners": [
+    "Arthur",
+    "Max"
+  ],
+  "hopfenhirn_des_monats": "Whizzy"
+}
