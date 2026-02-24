@@ -109,10 +109,11 @@ jobs:
         run: |
           python generate_monthly.py
           python generate_stats.py
+          python remove_past_events.py
 
       - name: Commit changes
         run: |
-          git add "data/${{ inputs.date }}.json" monthly.json stats.json
+          git add "data/${{ inputs.date }}.json" monthly.json stats.json events.json
 
           if git diff --staged --quiet; then
             echo "No changes to commit"
