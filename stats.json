@@ -1,35 +1,35 @@
 {
   "Whizzy": {
-    "attendances": 31,
+    "attendances": 32,
     "quizmaster_count": 5,
     "hopfenhirn_des_monats_count": 1,
     "wins": 5,
-    "played_events": 24,
-    "winrate": 0.2083
+    "played_events": 25,
+    "winrate": 0.2
   },
   "Cello": {
-    "attendances": 30,
+    "attendances": 31,
     "quizmaster_count": 7,
     "hopfenhirn_des_monats_count": 0,
     "wins": 5,
-    "played_events": 21,
-    "winrate": 0.2381
+    "played_events": 22,
+    "winrate": 0.2273
   },
   "Luca": {
-    "attendances": 28,
+    "attendances": 29,
     "quizmaster_count": 4,
     "hopfenhirn_des_monats_count": 0,
-    "wins": 11,
-    "played_events": 23,
-    "winrate": 0.4783
+    "wins": 12,
+    "played_events": 24,
+    "winrate": 0.5
   },
   "Eric": {
-    "attendances": 18,
+    "attendances": 19,
     "quizmaster_count": 2,
     "hopfenhirn_des_monats_count": 0,
-    "wins": 4,
-    "played_events": 16,
-    "winrate": 0.25
+    "wins": 5,
+    "played_events": 17,
+    "winrate": 0.2941
   },
   "Dennis M.": {
     "attendances": 16,
@@ -72,8 +72,8 @@
     "winrate": 0.2857
   },
   "Arthur": {
-    "attendances": 9,
-    "quizmaster_count": 0,
+    "attendances": 10,
+    "quizmaster_count": 1,
     "hopfenhirn_des_monats_count": 3,
     "wins": 2,
     "played_events": 9,
