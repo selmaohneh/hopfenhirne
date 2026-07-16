@@ -345,6 +345,37 @@
         .highlight-card.gold .highlight-name { color: var(--gold-light); }
         .highlight-card.hop .highlight-name { color: var(--hop); }
 
+        .podium {
+            list-style: none;
+            margin: 0.6rem 0 0.35rem;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .podium li {
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
+            font-family: 'Fraunces', serif;
+            font-weight: 700;
+            font-size: 1.35rem;
+            line-height: 1.2;
+            color: var(--text);
+        }
+
+        .podium li:first-child {
+            font-size: 1.9rem;
+            color: var(--gold-light);
+        }
+
+        .podium .medal {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85em;
+        }
+
         .highlight-month {
             margin: 0;
             font-size: 0.88rem;
@@ -723,7 +754,7 @@
         const MONTH_NAMES_LONG = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
         const WEEKDAY_NAMES = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
 
-        function createHighlightCard(variant, icon, label, name, monthText) {
+        function createHighlightCard(variant, icon, label, content, monthText) {
             const card = document.createElement('article');
             card.className = `highlight-card ${variant}`;
 
@@ -737,10 +768,14 @@
             labelEl.textContent = label;
             card.appendChild(labelEl);
 
-            const nameEl = document.createElement('p');
-            nameEl.className = 'highlight-name';
-            nameEl.textContent = name;
-            card.appendChild(nameEl);
+            if (typeof content === 'string') {
+                const nameEl = document.createElement('p');
+                nameEl.className = 'highlight-name';
+                nameEl.textContent = content;
+                card.appendChild(nameEl);
+            } else {
+                card.appendChild(content);
+            }
 
             if (monthText) {
                 const monthEl = document.createElement('p');
@@ -750,6 +785,27 @@
             }
 
             return card;
+        }
+
+        // Winners are ordered by placement (1st, 2nd, 3rd)
+        function createPodium(winners) {
+            const MEDALS = ['🥇', '🥈', '🥉'];
+            const list = document.createElement('ol');
+            list.className = 'podium';
+
+            winners.forEach((winner, index) => {
+                const item = document.createElement('li');
+
+                const medal = document.createElement('span');
+                medal.className = 'medal';
+                medal.textContent = MEDALS[index] || '🏅';
+                item.appendChild(medal);
+
+                item.appendChild(document.createTextNode(winner));
+                list.appendChild(item);
+            });
+
+            return list;
         }
 
         async function updateHighlights() {
@@ -771,8 +827,10 @@
                 }
 
                 if (monthlyData.winners && monthlyData.winners.length > 0) {
-                    const label = monthlyData.winners.length > 1 ? 'Quiz-Champions des Monats' : 'Quiz-Champion des Monats';
-                    grid.appendChild(createHighlightCard('gold', '🏆', label, monthlyData.winners.join(', '), monthText));
+                    const multiple = monthlyData.winners.length > 1;
+                    const label = multiple ? 'Quiz-Champions des Monats' : 'Quiz-Champion des Monats';
+                    const content = multiple ? createPodium(monthlyData.winners) : monthlyData.winners[0];
+                    grid.appendChild(createHighlightCard('gold', '🏆', label, content, monthText));
                 }
 
                 if (monthlyData.hopfenhirn_des_monats) {
