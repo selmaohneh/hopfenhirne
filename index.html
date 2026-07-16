@@ -345,35 +345,22 @@
         .highlight-card.gold .highlight-name { color: var(--gold-light); }
         .highlight-card.hop .highlight-name { color: var(--hop); }
 
-        .podium {
+        .champion-list {
             list-style: none;
-            margin: 0.6rem 0 0.35rem;
+            margin: 0.5rem 0 0.35rem;
             padding: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 0.3rem;
+            gap: 0.2rem;
         }
 
-        .podium li {
-            display: flex;
-            align-items: baseline;
-            gap: 0.5rem;
+        .champion-list li {
             font-family: 'Fraunces', serif;
             font-weight: 700;
-            font-size: 1.35rem;
-            line-height: 1.2;
-            color: var(--text);
-        }
-
-        .podium li:first-child {
-            font-size: 1.9rem;
+            font-size: 1.6rem;
+            line-height: 1.25;
             color: var(--gold-light);
-        }
-
-        .podium .medal {
-            font-family: 'Inter', sans-serif;
-            font-size: 0.85em;
         }
 
         .highlight-month {
@@ -787,23 +774,16 @@
             return card;
         }
 
-        // Winners are ordered by placement (1st, 2nd, 3rd)
-        function createPodium(winners) {
-            const MEDALS = ['🥇', '🥈', '🥉'];
-            const list = document.createElement('ol');
-            list.className = 'podium';
+        // All winners won together as a team, so they are listed as equals
+        function createChampionList(winners) {
+            const list = document.createElement('ul');
+            list.className = 'champion-list';
 
-            winners.forEach((winner, index) => {
+            for (const winner of winners) {
                 const item = document.createElement('li');
-
-                const medal = document.createElement('span');
-                medal.className = 'medal';
-                medal.textContent = MEDALS[index] || '🏅';
-                item.appendChild(medal);
-
-                item.appendChild(document.createTextNode(winner));
+                item.textContent = winner;
                 list.appendChild(item);
-            });
+            }
 
             return list;
         }
@@ -829,7 +809,7 @@
                 if (monthlyData.winners && monthlyData.winners.length > 0) {
                     const multiple = monthlyData.winners.length > 1;
                     const label = multiple ? 'Quiz-Champions des Monats' : 'Quiz-Champion des Monats';
-                    const content = multiple ? createPodium(monthlyData.winners) : monthlyData.winners[0];
+                    const content = multiple ? createChampionList(monthlyData.winners) : monthlyData.winners[0];
                     grid.appendChild(createHighlightCard('gold', '🏆', label, content, monthText));
                 }
 
