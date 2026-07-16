@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Die Hopfenhirne – Quiz-Stammtisch seit 2023. Bier, Quiz und gute Laune: aktuelle Termine, Quiz-Ergebnisse, Quiz-Champions des Monats und Statistiken unserer Stammtischrunde.">
     <meta name="robots" content="index, follow">
-    <meta name="theme-color" content="#000000">
+    <meta name="theme-color" content="#0d0a05">
     <title>Die Hopfenhirne – Quiz-Stammtisch | Termine, Ergebnisse &amp; Statistiken</title>
     <link rel="canonical" href="https://www.hopfenhirne.de/">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -42,96 +42,473 @@
         "foundingDate": "2023"
     }
     </script>
-    <style>
-        /* Import modern font */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
-        /* Base styling */
-        body {
-            margin: 0;
-            padding: 20px;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background-color: #000; /* black background to match the icon */
-            color: #fff;
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #0d0a05;
+            --bg-raised: #16110a;
+            --surface: #1c1610;
+            --surface-hover: #251d13;
+            --border: #2f261a;
+            --border-strong: #453724;
+            --gold: #d4a72c;
+            --gold-light: #ecc55e;
+            --gold-dim: rgba(212, 167, 44, 0.14);
+            --hop: #98d836;
+            --hop-dark: #74ad25;
+            --hop-dim: rgba(152, 216, 54, 0.12);
+            --text: #f3ecdc;
+            --text-muted: #b3a78e;
+            --text-faint: #8a7e66;
+            --radius: 16px;
+            --radius-sm: 10px;
         }
 
-        /* Modern heading styling */
-        h1,
-        h2 {
-            font-size: 1.75rem;
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: var(--bg);
+            background-image:
+                radial-gradient(ellipse 80% 50% at 50% -10%, rgba(212, 167, 44, 0.10), transparent 60%),
+                radial-gradient(ellipse 60% 40% at 85% 25%, rgba(152, 216, 54, 0.05), transparent 60%);
+            background-repeat: no-repeat;
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .wrap {
+            max-width: 68rem;
+            margin: 0 auto;
+            padding: 0 1.25rem;
+        }
+
+        /* ---------- Navigation ---------- */
+        .nav {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(13, 10, 5, 0.82);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 0.65rem 1.25rem;
+            max-width: 68rem;
+            margin: 0 auto;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            text-decoration: none;
+            color: var(--text);
+            font-family: 'Fraunces', serif;
             font-weight: 700;
-            letter-spacing: -0.02em;
-            margin-bottom: 1rem;
-            margin-top: 2rem;
-            background: linear-gradient(to right, #c8a633, #98d836);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-size: 1.05rem;
+            letter-spacing: 0.01em;
+            white-space: nowrap;
+        }
+
+        .nav-brand img {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 500;
+            padding: 0.4rem 0.75rem;
+            border-radius: 999px;
+            transition: color 0.2s ease, background-color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold-light);
+            background: var(--gold-dim);
+        }
+
+        /* ---------- Hero ---------- */
+        .hero {
+            text-align: center;
+            padding: 3.5rem 0 3rem;
+        }
+
+        .hero-logo {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 1.75rem;
+        }
+
+        .hero-logo::before {
+            content: '';
+            position: absolute;
+            inset: -12%;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(212, 167, 44, 0.28), rgba(152, 216, 54, 0.10) 55%, transparent 72%);
+            filter: blur(18px);
+            z-index: 0;
+        }
+
+        .hero-logo img {
+            position: relative;
+            z-index: 1;
+            width: min(240px, 55vw);
+            height: auto;
+            border-radius: 50%;
+            box-shadow: 0 12px 50px rgba(0, 0, 0, 0.6);
+        }
+
+        .hero-eyebrow {
+            margin: 0 0 0.75rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--gold);
         }
 
         h1 {
-            font-size: 2.25rem;
-            text-align: center;
-            margin-top: 1rem;
-            margin-bottom: 0;
+            margin: 0;
+            font-family: 'Fraunces', serif;
+            font-weight: 900;
+            font-size: clamp(2.5rem, 7vw, 4rem);
+            line-height: 1.05;
+            letter-spacing: -0.01em;
+            background: linear-gradient(100deg, var(--gold-light) 15%, var(--gold) 45%, var(--hop) 90%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
         }
 
         .intro {
-            text-align: center;
-            max-width: 40rem;
-            margin: 0.5rem auto 0;
-            color: #ccc;
-            line-height: 1.6;
+            max-width: 34rem;
+            margin: 1.25rem auto 0;
+            color: var(--text-muted);
+            font-size: 1.05rem;
         }
 
-        .center-container {
+        .hero-chips {
             display: flex;
+            flex-wrap: wrap;
             justify-content: center;
-            margin: 2rem 0;
+            gap: 0.6rem;
+            margin-top: 1.75rem;
         }
 
-        .center-container img {
-            max-height: 50vh;
-            max-width: 50vh;
-            width: auto;
-            height: auto;
+        .chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.45rem 1rem;
+            border: 1px solid var(--border-strong);
+            border-radius: 999px;
+            background: var(--bg-raised);
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--text-muted);
         }
 
-        /* Data table styling */
-        #dataTable {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            margin-top: 2rem;
-            border-radius: 0.5rem;
+        /* ---------- Sections ---------- */
+        main {
+            padding-bottom: 2rem;
+        }
+
+        section {
+            padding: 2.5rem 0;
+            scroll-margin-top: 4.5rem;
+        }
+
+        .section-head {
+            margin-bottom: 1.5rem;
+        }
+
+        .section-eyebrow {
+            margin: 0 0 0.3rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--hop);
+        }
+
+        h2 {
+            margin: 0;
+            font-family: 'Fraunces', serif;
+            font-weight: 700;
+            font-size: clamp(1.6rem, 4vw, 2.1rem);
+            letter-spacing: -0.01em;
+            color: var(--text);
+        }
+
+        .section-sub {
+            margin: 0.5rem 0 0;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            max-width: 42rem;
+        }
+
+        /* ---------- Highlight cards (Aktuelles) ---------- */
+        .highlight-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .highlight-card {
+            position: relative;
+            overflow: hidden;
+            padding: 1.75rem 1.5rem;
+            background: linear-gradient(160deg, var(--surface), var(--bg-raised));
+            border: 1px solid var(--border-strong);
+            border-radius: var(--radius);
+            text-align: center;
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .highlight-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
+        }
+
+        .highlight-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+        }
+
+        .highlight-card.gold::before {
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+
+        .highlight-card.hop::before {
+            background: linear-gradient(90deg, transparent, var(--hop), transparent);
+        }
+
+        .highlight-card.gold:hover { border-color: var(--gold); }
+        .highlight-card.hop:hover { border-color: var(--hop-dark); }
+
+        .highlight-icon {
+            font-size: 2.4rem;
+            line-height: 1;
+            margin-bottom: 0.75rem;
+        }
+
+        .highlight-label {
+            margin: 0;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--text-faint);
+        }
+
+        .highlight-name {
+            margin: 0.5rem 0 0.25rem;
+            font-family: 'Fraunces', serif;
+            font-weight: 700;
+            font-size: 1.9rem;
+            line-height: 1.15;
+        }
+
+        .highlight-card.gold .highlight-name { color: var(--gold-light); }
+        .highlight-card.hop .highlight-name { color: var(--hop); }
+
+        .highlight-month {
+            margin: 0;
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+
+        .empty-note {
+            padding: 1.5rem;
+            border: 1px dashed var(--border-strong);
+            border-radius: var(--radius);
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        /* ---------- Events ---------- */
+        .event-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: grid;
+            gap: 0.85rem;
+        }
+
+        .event-card {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            padding: 1rem 1.25rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+        }
+
+        .event-card:hover {
+            transform: translateX(4px);
+            border-color: var(--border-strong);
+            background: var(--surface-hover);
+        }
+
+        .event-card.next {
+            border-color: rgba(212, 167, 44, 0.55);
+            background: linear-gradient(140deg, rgba(212, 167, 44, 0.10), var(--surface) 55%);
+        }
+
+        .event-date {
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 64px;
+            height: 64px;
+            border-radius: var(--radius-sm);
+            background: var(--bg-raised);
+            border: 1px solid var(--border-strong);
+        }
+
+        .event-card.next .event-date {
+            background: linear-gradient(160deg, var(--gold), #a87f1c);
+            border-color: transparent;
+        }
+
+        .event-day {
+            font-family: 'Fraunces', serif;
+            font-weight: 900;
+            font-size: 1.5rem;
+            line-height: 1;
+            color: var(--gold-light);
+        }
+
+        .event-month {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-faint);
+            margin-top: 0.2rem;
+        }
+
+        .event-card.next .event-day,
+        .event-card.next .event-month {
+            color: #14100a;
+        }
+
+        .event-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .event-name {
+            margin: 0;
+            font-weight: 600;
+            font-size: 1.08rem;
+        }
+
+        .event-meta {
+            margin: 0.15rem 0 0;
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+
+        .event-badge {
+            flex-shrink: 0;
+            padding: 0.3rem 0.8rem;
+            border-radius: 999px;
+            background: var(--gold-dim);
+            border: 1px solid rgba(212, 167, 44, 0.45);
+            color: var(--gold-light);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        /* ---------- Stats table ---------- */
+        .table-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
             overflow: hidden;
         }
 
-        #dataTable thead tr {
-            background: linear-gradient(to right, #c8a633, #98d836);
-            color: #000;
+        .table-scroll {
+            overflow-x: auto;
+        }
+
+        #dataTable {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 640px;
         }
 
         #dataTable th,
         #dataTable td {
             text-align: left;
-            padding: 0.75rem;
+            padding: 0.85rem 1rem;
+            white-space: nowrap;
         }
 
-        #dataTable th {
-            font-weight: bold;
+        #dataTable thead th {
+            position: relative;
+            background: var(--bg-raised);
+            border-bottom: 2px solid var(--border-strong);
+            color: var(--gold);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
             cursor: pointer;
             user-select: none;
-            position: relative;
+            transition: color 0.2s ease, background-color 0.2s ease;
         }
 
-        #dataTable th:hover {
-            background: linear-gradient(to right, #d4b040, #a5e042);
+        #dataTable thead th:hover {
+            color: var(--gold-light);
+            background: var(--surface-hover);
         }
 
         #dataTable th.sorted::after {
             content: ' ▼';
-            font-size: 0.8em;
+            font-size: 0.75em;
+            color: var(--hop);
         }
 
         #dataTable th.sorted.asc::after {
@@ -139,167 +516,244 @@
         }
 
         #dataTable tbody tr {
-            background-color: #1f1f1f;
-            border-bottom: 1px solid #98d836;
-            transition: background-color 0.3s ease;
+            border-bottom: 1px solid var(--border);
+            transition: background-color 0.15s ease;
         }
 
-        #dataTable tbody tr:nth-child(even) {
-            background-color: #2a2a2a;
+        #dataTable tbody tr:last-child {
+            border-bottom: none;
         }
 
         #dataTable tbody tr:hover {
-            background-color: #3d3d3d;
+            background-color: var(--gold-dim);
         }
 
-        /* Events table styling */
-        #eventsTable {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            margin-top: 2rem;
-            border-radius: 0.5rem;
+        #dataTable td {
+            font-size: 0.95rem;
+            color: var(--text);
+        }
+
+        #dataTable td.num {
+            font-variant-numeric: tabular-nums;
+            color: var(--text-muted);
+        }
+
+        .player-name {
+            font-weight: 600;
+        }
+
+        .winrate-cell {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            min-width: 130px;
+        }
+
+        .winrate-value {
+            font-variant-numeric: tabular-nums;
+            font-weight: 600;
+            width: 3.6rem;
+        }
+
+        .winrate-bar {
+            flex: 1;
+            height: 6px;
+            min-width: 56px;
+            border-radius: 999px;
+            background: var(--bg-raised);
             overflow: hidden;
         }
 
-        #eventsTable thead tr {
-            background: linear-gradient(to right, #c8a633, #98d836);
-            color: #000;
+        .winrate-bar span {
+            display: block;
+            height: 100%;
+            border-radius: 999px;
+            background: linear-gradient(90deg, var(--gold), var(--hop));
         }
 
-        #eventsTable th,
-        #eventsTable td {
-            text-align: left;
-            padding: 0.75rem;
+        .table-hint {
+            margin: 0.85rem 0 0;
+            font-size: 0.82rem;
+            color: var(--text-faint);
         }
 
-        #eventsTable th {
-            font-weight: bold;
-        }
-
-        #eventsTable tbody tr {
-            background-color: #1f1f1f;
-            border-bottom: 1px solid #98d836;
-            transition: background-color 0.3s ease;
-        }
-
-        #eventsTable tbody tr:nth-child(even) {
-            background-color: #2a2a2a;
-        }
-
-        #eventsTable tbody tr:hover {
-            background-color: #3d3d3d;
-        }
-
-        /* Aktuelles table styling */
-        #aktuellesTable {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
+        /* ---------- Footer ---------- */
+        footer {
+            border-top: 1px solid var(--border);
             margin-top: 2rem;
-            border-radius: 0.5rem;
-            overflow: hidden;
+            padding: 2rem 0 2.5rem;
+            text-align: center;
         }
 
-        #aktuellesTable thead tr {
-            background: linear-gradient(to right, #c8a633, #98d836);
-            color: #000;
+        .footer-title {
+            margin: 0;
+            font-family: 'Fraunces', serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--gold);
         }
 
-        #aktuellesTable th,
-        #aktuellesTable td {
-            text-align: left;
-            padding: 0.75rem;
+        .footer-sub {
+            margin: 0.35rem 0 0;
+            font-size: 0.85rem;
+            color: var(--text-faint);
         }
 
-        #aktuellesTable th {
-            font-weight: bold;
-        }
-
-        #aktuellesTable tbody tr {
-            background-color: #1f1f1f;
-            border-bottom: 1px solid #98d836;
-            transition: background-color 0.3s ease;
-        }
-
-        #aktuellesTable tbody tr:nth-child(even) {
-            background-color: #2a2a2a;
-        }
-
-        #aktuellesTable tbody tr:hover {
-            background-color: #3d3d3d;
-        }
-
-        /* Responsive adjustments */
+        /* ---------- Responsive ---------- */
         @media (max-width: 600px) {
-            #dataTable th,
-            #dataTable td,
-            #eventsTable th,
-            #eventsTable td,
-            #aktuellesTable th,
-            #aktuellesTable td {
-                padding: 0.4rem;
-                font-size: 0.9rem;
+            .nav-brand span {
+                display: none;
+            }
+
+            .hero {
+                padding-top: 2.5rem;
+            }
+
+            .event-card {
+                gap: 0.9rem;
+                padding: 0.85rem 1rem;
+            }
+
+            .event-date {
+                width: 54px;
+                height: 54px;
+            }
+
+            .event-badge {
+                display: none;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            .highlight-card,
+            .event-card {
+                transition: none;
             }
         }
     </style>
 </head>
 
 <body>
-    <header>
-        <h1>Die Hopfenhirne</h1>
-        <p class="intro">Der Quiz-Stammtisch – Bier &amp; Quiz seit 2023. Hier findet ihr unsere kommenden
-            Termine, die aktuellen Quiz-Champions und die Statistiken aller Mitglieder.</p>
-        <div class="center-container">
+    <nav class="nav" aria-label="Hauptnavigation">
+        <div class="nav-inner">
+            <a class="nav-brand" href="#top">
+                <img src="icon.png" alt="" width="34" height="34">
+                <span>Die Hopfenhirne</span>
+            </a>
+            <div class="nav-links">
+                <a href="#aktuelles">Aktuelles</a>
+                <a href="#termine">Termine</a>
+                <a href="#statistiken">Statistiken</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero wrap" id="top">
+        <div class="hero-logo">
             <img src="icon.png" alt="Logo der Hopfenhirne – Quiz-Stammtisch, Bier &amp; Quiz seit 2023" width="800" height="800">
+        </div>
+        <p class="hero-eyebrow">Quiz-Stammtisch · Seit 2023</p>
+        <h1>Die Hopfenhirne</h1>
+        <p class="intro">Bier &amp; Quiz seit 2023. Hier findet ihr unsere kommenden Termine,
+            die aktuellen Quiz-Champions und die Statistiken aller Mitglieder.</p>
+        <div class="hero-chips">
+            <span class="chip">🍺 Frisch gezapft</span>
+            <span class="chip">🧠 Hart gerätselt</span>
+            <span class="chip">🏆 Ruhm &amp; Ehre</span>
         </div>
     </header>
 
-    <h2>Aktuelles:</h2>
-    <table id="aktuellesTable">
-        <thead>
-            <tr>
-                <th>Kategorie</th>
-                <th>Name</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+    <main class="wrap">
+        <section id="aktuelles">
+            <div class="section-head">
+                <p class="section-eyebrow">Frisch gezapft</p>
+                <h2>Aktuelles</h2>
+                <p class="section-sub">Die Helden – und das Hopfenhirn – des letzten Quiz-Abends.</p>
+            </div>
+            <div class="highlight-grid" id="highlightGrid"></div>
+        </section>
 
-    <br/>
+        <section id="termine">
+            <div class="section-head">
+                <p class="section-eyebrow">Save the Date</p>
+                <h2>Kommende Termine</h2>
+                <p class="section-sub">Wann der Stammtisch das nächste Mal zusammenkommt.</p>
+            </div>
+            <ul class="event-list" id="eventList"></ul>
+        </section>
 
-    <h2>Kommende Termine:</h2>
-    <table id="eventsTable">
-        <thead>
-            <tr>
-                <th>Datum</th>
-                <th>Uhrzeit</th>
-                <th>Event</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+        <section id="statistiken">
+            <div class="section-head">
+                <p class="section-eyebrow">Zahlen, bitte!</p>
+                <h2>Statistiken</h2>
+                <p class="section-sub">Die ewige Tabelle aller Mitglieder mit mindestens drei Quiz-Teilnahmen.</p>
+            </div>
+            <div class="table-card">
+                <div class="table-scroll">
+                    <table id="dataTable">
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Teilnahmen</th>
+                                <th scope="col">Quiz Teilnahmen</th>
+                                <th scope="col">Winrate</th>
+                                <th scope="col">Quizmaster</th>
+                                <th scope="col">Hopfenhirn des Monats</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            <p class="table-hint">Tipp: Spaltenüberschriften anklicken zum Sortieren. Winrate = Siege ÷ Quiz-Teilnahmen (ohne Abende als Quizmaster).</p>
+        </section>
+    </main>
 
-    <br/>
-
-    <h2>Statistiken:</h2>
-    <table id="dataTable">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Teilnahmen</th>
-                <th>Quiz Teilnahmen</th>
-                <th>Winrate [%]</th>
-                <th>Quizmaster</th>
-                <th>Hopfenhirn des Monats</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+    <footer>
+        <p class="footer-title">Die Hopfenhirne</p>
+        <p class="footer-sub">Bier &amp; Quiz seit 2023 · Mit Hopfen und Herz gebraut 🍻</p>
+    </footer>
 
     <script>
-        async function updateAktuellesTable() {
-            const tableBody = document.querySelector('#aktuellesTable tbody');
+        const MONTH_NAMES_SHORT = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
+        const MONTH_NAMES_LONG = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
+        const WEEKDAY_NAMES = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
+
+        function createHighlightCard(variant, icon, label, name, monthText) {
+            const card = document.createElement('article');
+            card.className = `highlight-card ${variant}`;
+
+            const iconEl = document.createElement('div');
+            iconEl.className = 'highlight-icon';
+            iconEl.textContent = icon;
+            card.appendChild(iconEl);
+
+            const labelEl = document.createElement('p');
+            labelEl.className = 'highlight-label';
+            labelEl.textContent = label;
+            card.appendChild(labelEl);
+
+            const nameEl = document.createElement('p');
+            nameEl.className = 'highlight-name';
+            nameEl.textContent = name;
+            card.appendChild(nameEl);
+
+            if (monthText) {
+                const monthEl = document.createElement('p');
+                monthEl.className = 'highlight-month';
+                monthEl.textContent = monthText;
+                card.appendChild(monthEl);
+            }
+
+            return card;
+        }
+
+        async function updateHighlights() {
+            const grid = document.getElementById('highlightGrid');
 
             try {
                 const response = await fetch('monthly.json');
@@ -308,75 +762,104 @@
                 }
                 const monthlyData = await response.json();
 
-                tableBody.innerHTML = '';
+                grid.innerHTML = '';
 
-                // Add Quiz-Champions row if there are winners
-                if (monthlyData.winners && monthlyData.winners.length > 0) {
-                    const winnerRowElement = document.createElement('tr');
-                    let cell = document.createElement('td');
-                    cell.textContent = 'Quiz-Champions des Monats';
-                    winnerRowElement.appendChild(cell);
-                    cell = document.createElement('td');
-                    cell.textContent = monthlyData.winners.join(', ');
-                    winnerRowElement.appendChild(cell);
-                    tableBody.appendChild(winnerRowElement);
+                let monthText = '';
+                if (monthlyData.date) {
+                    const [year, month] = monthlyData.date.split('-');
+                    monthText = `${MONTH_NAMES_LONG[parseInt(month, 10) - 1]} ${year}`;
                 }
 
-                // Add Hopfenhirn des Monats row
+                if (monthlyData.winners && monthlyData.winners.length > 0) {
+                    const label = monthlyData.winners.length > 1 ? 'Quiz-Champions des Monats' : 'Quiz-Champion des Monats';
+                    grid.appendChild(createHighlightCard('gold', '🏆', label, monthlyData.winners.join(', '), monthText));
+                }
+
                 if (monthlyData.hopfenhirn_des_monats) {
-                    const hopfenhirnRowElement = document.createElement('tr');
-                    let cell = document.createElement('td');
-                    cell.textContent = 'Hopfenhirn des Monats';
-                    hopfenhirnRowElement.appendChild(cell);
-                    cell = document.createElement('td');
-                    cell.textContent = monthlyData.hopfenhirn_des_monats;
-                    hopfenhirnRowElement.appendChild(cell);
-                    tableBody.appendChild(hopfenhirnRowElement);
+                    grid.appendChild(createHighlightCard('hop', '🍺', 'Hopfenhirn des Monats', monthlyData.hopfenhirn_des_monats, monthText));
+                }
+
+                if (!grid.children.length) {
+                    grid.innerHTML = '<p class="empty-note">Keine Daten verfügbar</p>';
                 }
             } catch (error) {
                 console.error('Error loading monthly data:', error);
-                tableBody.innerHTML = '<tr><td colspan="2">Keine Daten verfügbar</td></tr>';
+                grid.innerHTML = '<p class="empty-note">Keine Daten verfügbar</p>';
+            }
+        }
+
+        async function updateEvents() {
+            const list = document.getElementById('eventList');
+
+            try {
+                const eventsResponse = await fetch('events.json');
+                if (!eventsResponse.ok) {
+                    throw new Error(`HTTP error! status: ${eventsResponse.status}`);
+                }
+                const events = await eventsResponse.json();
+                list.innerHTML = '';
+
+                if (!events.length) {
+                    list.innerHTML = '<li class="empty-note">Aktuell sind keine Termine geplant – schaut bald wieder vorbei!</li>';
+                    return;
+                }
+
+                // Events are already sorted by date ascending in the JSON
+                events.forEach((event, index) => {
+                    const [year, month, day] = event.date.split('-').map(Number);
+                    const dateObj = new Date(year, month - 1, day);
+
+                    const item = document.createElement('li');
+                    item.className = index === 0 ? 'event-card next' : 'event-card';
+
+                    const dateBox = document.createElement('div');
+                    dateBox.className = 'event-date';
+
+                    const dayEl = document.createElement('span');
+                    dayEl.className = 'event-day';
+                    dayEl.textContent = String(day).padStart(2, '0');
+                    dateBox.appendChild(dayEl);
+
+                    const monthEl = document.createElement('span');
+                    monthEl.className = 'event-month';
+                    monthEl.textContent = MONTH_NAMES_SHORT[month - 1];
+                    dateBox.appendChild(monthEl);
+
+                    item.appendChild(dateBox);
+
+                    const info = document.createElement('div');
+                    info.className = 'event-info';
+
+                    const nameEl = document.createElement('p');
+                    nameEl.className = 'event-name';
+                    nameEl.textContent = event.name;
+                    info.appendChild(nameEl);
+
+                    const metaEl = document.createElement('p');
+                    metaEl.className = 'event-meta';
+                    metaEl.textContent = `${WEEKDAY_NAMES[dateObj.getDay()]}, ${String(day).padStart(2, '0')}.${String(month).padStart(2, '0')}.${year} · ${event.time} Uhr`;
+                    info.appendChild(metaEl);
+
+                    item.appendChild(info);
+
+                    if (index === 0) {
+                        const badge = document.createElement('span');
+                        badge.className = 'event-badge';
+                        badge.textContent = 'Als Nächstes';
+                        item.appendChild(badge);
+                    }
+
+                    list.appendChild(item);
+                });
+            } catch (error) {
+                console.error('Error loading events:', error);
+                list.innerHTML = '<li class="empty-note">Keine Daten verfügbar</li>';
             }
         }
 
         window.onload = async () => {
-            // Update the Aktuelles table
-            await updateAktuellesTable();
-
-            // Load events from local events.json file
-            try {
-                const eventsResponse = await fetch('events.json');
-                if (eventsResponse.ok) {
-                    const events = await eventsResponse.json();
-                    const tableBody = document.querySelector('#eventsTable tbody');
-                    tableBody.innerHTML = '';
-
-                    // Events are already sorted by date ascending in the JSON
-                    for (const event of events) {
-                        const row = document.createElement('tr');
-
-                        // Convert date from YYYY-MM-DD to DD.MM.YYYY
-                        const dateParts = event.date.split('-');
-                        const formattedDate = `${dateParts[2]}.${dateParts[1]}.${dateParts[0]}`;
-
-                        let cell = document.createElement('td');
-                        cell.textContent = formattedDate;
-                        row.appendChild(cell);
-
-                        cell = document.createElement('td');
-                        cell.textContent = event.time;
-                        row.appendChild(cell);
-
-                        cell = document.createElement('td');
-                        cell.textContent = event.name;
-                        row.appendChild(cell);
-
-                        tableBody.appendChild(row);
-                    }
-                }
-            } catch (error) {
-                console.error('Error loading events:', error);
-            }
+            await updateHighlights();
+            await updateEvents();
 
             // Load statistics from local stats.json file
             let statsArray = [];
@@ -390,26 +873,43 @@
                     const row = document.createElement('tr');
 
                     let cell = document.createElement('td');
+                    cell.className = 'player-name';
                     cell.textContent = person.name;
                     row.appendChild(cell);
 
                     cell = document.createElement('td');
+                    cell.className = 'num';
                     cell.textContent = person.attendances;
                     row.appendChild(cell);
 
                     cell = document.createElement('td');
+                    cell.className = 'num';
                     cell.textContent = person.played_events;
                     row.appendChild(cell);
 
                     cell = document.createElement('td');
-                    cell.textContent = (person.winrate * 100).toFixed(2);
+                    const winrateWrap = document.createElement('div');
+                    winrateWrap.className = 'winrate-cell';
+                    const winrateValue = document.createElement('span');
+                    winrateValue.className = 'winrate-value';
+                    winrateValue.textContent = `${(person.winrate * 100).toFixed(1)} %`;
+                    winrateWrap.appendChild(winrateValue);
+                    const winrateBar = document.createElement('div');
+                    winrateBar.className = 'winrate-bar';
+                    const winrateFill = document.createElement('span');
+                    winrateFill.style.width = `${Math.min(person.winrate * 100, 100)}%`;
+                    winrateBar.appendChild(winrateFill);
+                    winrateWrap.appendChild(winrateBar);
+                    cell.appendChild(winrateWrap);
                     row.appendChild(cell);
 
                     cell = document.createElement('td');
+                    cell.className = 'num';
                     cell.textContent = person.quizmaster_count;
                     row.appendChild(cell);
 
                     cell = document.createElement('td');
+                    cell.className = 'num';
                     cell.textContent = person.hopfenhirn_des_monats_count;
                     row.appendChild(cell);
 
@@ -494,7 +994,7 @@
             } catch (error) {
                 console.error('Error loading stats:', error);
             }
-        }
+        };
     </script>
 </body>
 </html>
