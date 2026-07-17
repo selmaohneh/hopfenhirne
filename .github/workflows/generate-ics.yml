@@ -1,0 +1,44 @@
+name: Generate calendar feed
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - events.json
+      - generate_ics.py
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  generate-ics:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Set up Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Generate events.ics
+        run: python generate_ics.py
+
+      - name: Commit and push changes
+        run: |
+          git add events.ics
+
+          if git diff --staged --quiet; then
+            echo "events.ics is already up to date"
+          else
+            git commit -m "Regenerate events.ics from events.json"
+            git push
+          fi
