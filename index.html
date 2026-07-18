@@ -479,14 +479,15 @@
             white-space: nowrap;
         }
 
-        .calendar-actions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
+        .calendar-dropdown {
+            position: relative;
+            display: inline-block;
             margin-top: 1.5rem;
         }
 
         .calendar-btn {
+            cursor: pointer;
+            list-style: none;
             display: inline-flex;
             align-items: center;
             gap: 0.4rem;
@@ -518,11 +519,46 @@
             border-color: var(--hop);
         }
 
-        .calendar-hint {
-            margin: 0.75rem 0 0;
-            font-size: 0.85rem;
-            color: var(--text-faint);
-            max-width: 42rem;
+        .calendar-btn::-webkit-details-marker {
+            display: none;
+        }
+
+        .calendar-caret {
+            font-size: 0.7rem;
+            transition: transform 0.2s ease;
+        }
+
+        .calendar-dropdown[open] .calendar-caret {
+            transform: rotate(180deg);
+        }
+
+        .calendar-menu {
+            position: absolute;
+            top: calc(100% + 0.4rem);
+            left: 0;
+            min-width: 100%;
+            padding: 0.35rem;
+            border-radius: 14px;
+            border: 1px solid var(--border-strong);
+            background: var(--surface);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+            z-index: 10;
+        }
+
+        .calendar-menu a {
+            display: block;
+            padding: 0.55rem 0.9rem;
+            border-radius: 10px;
+            color: var(--text);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .calendar-menu a:hover {
+            background: var(--surface-hover);
+            color: var(--hop);
         }
 
         /* ---------- Stats table ---------- */
@@ -748,12 +784,13 @@
                 <p class="section-sub">Wann der Stammtisch das nächste Mal zusammenkommt.</p>
             </div>
             <ul class="event-list" id="eventList"></ul>
-            <div class="calendar-actions">
-                <a class="calendar-btn primary" href="webcal://www.hopfenhirne.de/events.ics">📅 Kalender abonnieren</a>
-                <a class="calendar-btn" href="https://calendar.google.com/calendar/r?cid=webcal%3A%2F%2Fwww.hopfenhirne.de%2Fevents.ics" target="_blank" rel="noopener">Google Kalender</a>
-                <a class="calendar-btn" href="events.ics" download="hopfenhirne.ics">.ics herunterladen</a>
-            </div>
-            <p class="calendar-hint">Per Abo landen neue Termine automatisch in eurem Kalender – Apple &amp; Outlook nutzen „Kalender abonnieren“, Android-Nutzer den Google-Kalender-Link.</p>
+            <details class="calendar-dropdown">
+                <summary class="calendar-btn primary">📅 Kalender abonnieren <span class="calendar-caret">▾</span></summary>
+                <div class="calendar-menu">
+                    <a href="webcal://www.hopfenhirne.de/events.ics">Apple / Outlook</a>
+                    <a href="https://calendar.google.com/calendar/r?cid=webcal%3A%2F%2Fwww.hopfenhirne.de%2Fevents.ics" target="_blank" rel="noopener">Google Kalender</a>
+                </div>
+            </details>
         </section>
 
         <section id="statistiken">
@@ -789,6 +826,13 @@
     </footer>
 
     <script>
+        const calendarDropdown = document.querySelector('.calendar-dropdown');
+        document.addEventListener('click', (event) => {
+            if (calendarDropdown.open && !calendarDropdown.contains(event.target)) {
+                calendarDropdown.open = false;
+            }
+        });
+
         const MONTH_NAMES_SHORT = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
         const MONTH_NAMES_LONG = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
         const WEEKDAY_NAMES = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
