@@ -66,4 +66,5 @@ python generate_ics.py
 
 - `winrate` = wins / played_events (events where person attended but was not quizmaster)
 - Website displays only members with `played_events >= 3` in the stats table
+- Members whose `last_attendance` is more than 365 days ago are hidden from the stats table
 - Stats table is sortable by clicking column headers

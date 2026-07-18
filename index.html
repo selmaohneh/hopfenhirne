@@ -1107,9 +1107,13 @@
                     const statsData = await statsResponse.json();
 
                     // Convert to array and filter for played_events >= 3
+                    // and last attendance within the past 365 days
+                    const cutoffDate = new Date();
+                    cutoffDate.setDate(cutoffDate.getDate() - 365);
                     statsArray = Object.entries(statsData)
                         .map(([name, stats]) => ({ name, ...stats }))
-                        .filter(person => person.played_events >= 3);
+                        .filter(person => person.played_events >= 3)
+                        .filter(person => !person.last_attendance || new Date(person.last_attendance) >= cutoffDate);
 
                     // Sort by winrate descending (default)
                     statsArray.sort((a, b) => b.winrate - a.winrate);

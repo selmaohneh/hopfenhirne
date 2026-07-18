@@ -18,7 +18,8 @@ def main():
         "hopfenhirn_des_monats_count": 0,
         "wins": 0,
         "played_events": 0,
-        "winrate": 0.0
+        "winrate": 0.0,
+        "last_attendance": None
     })
 
     # Process all JSON files in the data directory
@@ -36,10 +37,16 @@ def main():
             quizmasters = event_data.get("quizmasters", [])
             winners = event_data.get("winners", [])
             has_quiz = len(quizmasters) > 0
+            event_date = event_data.get("date")
 
             # Count attendances
             for attendee in attendees:
                 stats[attendee]["attendances"] += 1
+
+                if event_date:
+                    last = stats[attendee]["last_attendance"]
+                    if last is None or event_date > last:
+                        stats[attendee]["last_attendance"] = event_date
 
                 # Count events where person played (was not quizmaster and there was a quiz)
                 if has_quiz and attendee not in quizmasters:

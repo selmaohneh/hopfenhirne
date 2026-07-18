@@ -5,7 +5,8 @@
     "hopfenhirn_des_monats_count": 1,
     "wins": 5,
     "played_events": 26,
-    "winrate": 0.1923
+    "winrate": 0.1923,
+    "last_attendance": "2026-07-01"
   },
   "Cello": {
     "attendances": 33,
@@ -13,7 +14,8 @@
     "hopfenhirn_des_monats_count": 1,
     "wins": 6,
     "played_events": 24,
-    "winrate": 0.25
+    "winrate": 0.25,
+    "last_attendance": "2026-07-01"
   },
   "Luca": {
     "attendances": 31,
@@ -21,7 +23,8 @@
     "hopfenhirn_des_monats_count": 0,
     "wins": 12,
     "played_events": 25,
-    "winrate": 0.48
+    "winrate": 0.48,
+    "last_attendance": "2026-07-01"
   },
   "Eric": {
     "attendances": 20,
@@ -29,7 +32,8 @@
     "hopfenhirn_des_monats_count": 0,
     "wins": 6,
     "played_events": 18,
-    "winrate": 0.3333
+    "winrate": 0.3333,
+    "last_attendance": "2026-07-01"
   },
   "Dennis M.": {
     "attendances": 16,
@@ -37,7 +41,8 @@
     "hopfenhirn_des_monats_count": 1,
     "wins": 6,
     "played_events": 13,
-    "winrate": 0.4615
+    "winrate": 0.4615,
+    "last_attendance": "2026-04-14"
   },
   "Fabsi": {
     "attendances": 14,
@@ -45,7 +50,8 @@
     "hopfenhirn_des_monats_count": 0,
     "wins": 7,
     "played_events": 13,
-    "winrate": 0.5385
+    "winrate": 0.5385,
+    "last_attendance": "2026-06-17"
   },
   "Dennis G.": {
     "attendances": 13,
@@ -53,7 +59,8 @@
     "hopfenhirn_des_monats_count": 0,
     "wins": 3,
     "played_events": 12,
-    "winrate": 0.25
+    "winrate": 0.25,
+    "last_attendance": "2025-12-27"
   },
   "Arthur": {
     "attendances": 12,
@@ -61,7 +68,8 @@
     "hopfenhirn_des_monats_count": 5,
     "wins": 2,
     "played_events": 11,
-    "winrate": 0.1818
+    "winrate": 0.1818,
+    "last_attendance": "2026-07-01"
   },
   "Christian": {
     "attendances": 11,
@@ -69,7 +77,8 @@
     "hopfenhirn_des_monats_count": 1,
     "wins": 3,
     "played_events": 10,
-    "winrate": 0.3
+    "winrate": 0.3,
+    "last_attendance": "2026-04-14"
   },
   "Toni": {
     "attendances": 10,
@@ -77,7 +86,8 @@
     "hopfenhirn_des_monats_count": 0,
     "wins": 2,
     "played_events": 7,
-    "winrate": 0.2857
+    "winrate": 0.2857,
+    "last_attendance": "2026-02-12"
   },
   "Max": {
     "attendances": 6,
@@ -85,7 +95,8 @@
     "hopfenhirn_des_monats_count": 2,
     "wins": 2,
     "played_events": 5,
-    "winrate": 0.4
+    "winrate": 0.4,
+    "last_attendance": "2026-03-12"
   },
   "Marvin": {
     "attendances": 5,
@@ -93,7 +104,8 @@
     "hopfenhirn_des_monats_count": 1,
     "wins": 3,
     "played_events": 5,
-    "winrate": 0.6
+    "winrate": 0.6,
+    "last_attendance": "2026-04-14"
   },
   "Lenny": {
     "attendances": 5,
@@ -101,7 +113,8 @@
     "hopfenhirn_des_monats_count": 0,
     "wins": 1,
     "played_events": 4,
-    "winrate": 0.25
+    "winrate": 0.25,
+    "last_attendance": "2026-02-12"
   },
   "Sterni": {
     "attendances": 5,
@@ -109,7 +122,8 @@
     "hopfenhirn_des_monats_count": 0,
     "wins": 1,
     "played_events": 5,
-    "winrate": 0.2
+    "winrate": 0.2,
+    "last_attendance": "2025-09-17"
   },
   "Jan": {
     "attendances": 4,
@@ -117,7 +131,8 @@
     "hopfenhirn_des_monats_count": 0,
     "wins": 1,
     "played_events": 4,
-    "winrate": 0.25
+    "winrate": 0.25,
+    "last_attendance": "2026-06-17"
   },
   "Marius": {
     "attendances": 4,
@@ -125,7 +140,8 @@
     "hopfenhirn_des_monats_count": 0,
     "wins": 0,
     "played_events": 4,
-    "winrate": 0.0
+    "winrate": 0.0,
+    "last_attendance": "2025-05-14"
   },
   "Ole": {
     "attendances": 3,
@@ -133,7 +149,8 @@
     "hopfenhirn_des_monats_count": 0,
     "wins": 2,
     "played_events": 2,
-    "winrate": 1.0
+    "winrate": 1.0,
+    "last_attendance": "2024-04-19"
   },
   "Philipp": {
     "attendances": 3,
@@ -141,7 +158,8 @@
     "hopfenhirn_des_monats_count": 0,
     "wins": 1,
     "played_events": 3,
-    "winrate": 0.3333
+    "winrate": 0.3333,
+    "last_attendance": "2025-12-27"
   },
   "Joost": {
     "attendances": 3,
@@ -149,7 +167,8 @@
     "hopfenhirn_des_monats_count": 0,
     "wins": 0,
     "played_events": 1,
-    "winrate": 0.0
+    "winrate": 0.0,
+    "last_attendance": "2025-12-27"
   },
   "Torben": {
     "attendances": 2,
@@ -157,7 +176,8 @@
     "hopfenhirn_des_monats_count": 0,
     "wins": 2,
     "played_events": 2,
-    "winrate": 1.0
+    "winrate": 1.0,
+    "last_attendance": "2024-03-20"
   },
   "Nico": {
     "attendances": 2,
@@ -165,7 +185,8 @@
     "hopfenhirn_des_monats_count": 0,
     "wins": 1,
     "played_events": 2,
-    "winrate": 0.5
+    "winrate": 0.5,
+    "last_attendance": "2025-12-27"
   },
   "Eike": {
     "attendances": 2,
@@ -173,7 +194,8 @@
     "hopfenhirn_des_monats_count": 0,
     "wins": 1,
     "played_events": 2,
-    "winrate": 0.5
+    "winrate": 0.5,
+    "last_attendance": "2026-03-12"
   },
   "Roya": {
     "attendances": 2,
@@ -181,7 +203,8 @@
     "hopfenhirn_des_monats_count": 0,
     "wins": 0,
     "played_events": 2,
-    "winrate": 0.0
+    "winrate": 0.0,
+    "last_attendance": "2025-04-19"
   },
   "Stefan": {
     "attendances": 1,
@@ -189,7 +212,8 @@
     "hopfenhirn_des_monats_count": 0,
     "wins": 1,
     "played_events": 1,
-    "winrate": 1.0
+    "winrate": 1.0,
+    "last_attendance": "2024-09-18"
   },
   "Yanneck": {
     "attendances": 1,
@@ -197,7 +221,8 @@
     "hopfenhirn_des_monats_count": 0,
     "wins": 0,
     "played_events": 1,
-    "winrate": 0.0
+    "winrate": 0.0,
+    "last_attendance": "2024-08-28"
   },
   "Marc": {
     "attendances": 1,
@@ -205,7 +230,8 @@
     "hopfenhirn_des_monats_count": 0,
     "wins": 0,
     "played_events": 1,
-    "winrate": 0.0
+    "winrate": 0.0,
+    "last_attendance": "2024-08-28"
   },
   "Tobi": {
     "attendances": 1,
@@ -213,7 +239,8 @@
     "hopfenhirn_des_monats_count": 0,
     "wins": 0,
     "played_events": 1,
-    "winrate": 0.0
+    "winrate": 0.0,
+    "last_attendance": "2025-12-27"
   },
   "Nico B.": {
     "attendances": 1,
@@ -221,6 +248,7 @@
     "hopfenhirn_des_monats_count": 0,
     "wins": 0,
     "played_events": 1,
-    "winrate": 0.0
+    "winrate": 0.0,
+    "last_attendance": "2025-12-27"
   }
 }
