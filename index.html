@@ -479,6 +479,52 @@
             white-space: nowrap;
         }
 
+        .calendar-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .calendar-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.6rem 1.2rem;
+            border-radius: 999px;
+            border: 1px solid var(--border-strong);
+            background: var(--surface);
+            color: var(--text);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .calendar-btn:hover {
+            background: var(--surface-hover);
+            border-color: var(--hop-dark);
+            transform: translateY(-1px);
+        }
+
+        .calendar-btn.primary {
+            background: var(--hop-dim);
+            border-color: var(--hop-dark);
+            color: var(--hop);
+        }
+
+        .calendar-btn.primary:hover {
+            background: rgba(152, 216, 54, 0.22);
+            border-color: var(--hop);
+        }
+
+        .calendar-hint {
+            margin: 0.75rem 0 0;
+            font-size: 0.85rem;
+            color: var(--text-faint);
+            max-width: 42rem;
+        }
+
         /* ---------- Stats table ---------- */
         .table-card {
             background: var(--surface);
@@ -702,6 +748,12 @@
                 <p class="section-sub">Wann der Stammtisch das nächste Mal zusammenkommt.</p>
             </div>
             <ul class="event-list" id="eventList"></ul>
+            <div class="calendar-actions">
+                <a class="calendar-btn primary" href="webcal://www.hopfenhirne.de/events.ics">📅 Kalender abonnieren</a>
+                <a class="calendar-btn" href="https://calendar.google.com/calendar/r?cid=webcal%3A%2F%2Fwww.hopfenhirne.de%2Fevents.ics" target="_blank" rel="noopener">Google Kalender</a>
+                <a class="calendar-btn" href="events.ics" download="hopfenhirne.ics">.ics herunterladen</a>
+            </div>
+            <p class="calendar-hint">Per Abo landen neue Termine automatisch in eurem Kalender – Apple &amp; Outlook nutzen „Kalender abonnieren“, Android-Nutzer den Google-Kalender-Link.</p>
         </section>
 
         <section id="statistiken">
