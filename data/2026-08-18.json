@@ -3,11 +3,13 @@
   "attendees": [
     "Arthur",
     "Cello",
+    "Dennis G.",
     "Dennis M.",
+    "Eric",
     "Fabsi",
     "Luca",
-    "Marvin",
     "Max",
+    "Philipp",
     "Whizzy"
   ],
   "quizmasters": [
@@ -15,7 +17,8 @@
   ],
   "winners": [
     "Luca",
-    "Marvin"
+    "Philipp",
+    "Eric"
   ],
   "hopfenhirn_des_monats": "Cello"
 }
