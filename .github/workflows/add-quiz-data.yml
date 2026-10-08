@@ -109,7 +109,7 @@ jobs:
         run: |
           python generate_monthly.py
           python generate_stats.py
-          python remove_past_events.py
+          python remove_past_events.py "${{ inputs.date }}"
 
       - name: Commit changes
         run: |
