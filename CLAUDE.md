@@ -14,7 +14,6 @@ The project consists of:
 - **Python scripts**: Data management utilities run via GitHub Actions
 - **data/**: Historical event data files named by date (YYYY-MM-DD.json)
 - **JSON files**: `events.json` (upcoming events), `stats.json` (member statistics), `monthly.json` (current month highlights)
-- **events.ics**: iCalendar feed generated from `events.json`, subscribable at webcal://www.hopfenhirne.de/events.ics
 
 ### Data Flow
 
@@ -22,7 +21,6 @@ The project consists of:
 2. `generate_stats.py` aggregates all `data/*.json` files into `stats.json`
 3. `generate_monthly.py` extracts the latest event's winners into `monthly.json`
 4. `remove_past_events.py` cleans up past events from `events.json` (runs on schedule)
-5. `generate_ics.py` converts `events.json` into the `events.ics` calendar feed (runs automatically on master when `events.json` changes)
 
 ### Event Data Schema (data/YYYY-MM-DD.json)
 
@@ -53,17 +51,13 @@ python remove_past_events.py
 
 # Also remove events up to and including a given date (used when adding quiz data)
 python remove_past_events.py YYYY-MM-DD
-
-# Regenerate the iCalendar feed (events.ics) from events.json
-python generate_ics.py
 ```
 
 ## GitHub Actions Workflows
 
 - **add-event.yml**: Manual trigger to add upcoming events (creates PR)
 - **add-quiz-data.yml**: Manual trigger to add event data with attendees, winners, etc. (creates PR)
-- **cleanup-past-events.yml**: Scheduled (every 12h) cleanup of past events from events.json and events.ics (commits directly to master)
-- **generate-ics.yml**: Regenerates events.ics on pushes to master that change events.json (commits directly to master)
+- **cleanup-past-events.yml**: Scheduled (every 12h) cleanup of past events from events.json (commits directly to master)
 
 ## Statistics Logic
 

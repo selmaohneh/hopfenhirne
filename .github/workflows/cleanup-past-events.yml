@@ -31,13 +31,9 @@ jobs:
           python remove_past_events.py > cleanup_output.txt 2>&1
           cat cleanup_output.txt
 
-          # Pushes made with the workflow token don't trigger generate-ics.yml,
-          # so the calendar feed is regenerated here as well
-          python generate_ics.py
-
       - name: Commit and push changes
         run: |
-          git add events.json events.ics
+          git add events.json
 
           if git diff --staged --quiet; then
             echo "No past events found"
