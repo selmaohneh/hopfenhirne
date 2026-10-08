@@ -51,6 +51,9 @@ python generate_monthly.py
 # Remove past events from events.json
 python remove_past_events.py
 
+# Also remove events up to and including a given date (used when adding quiz data)
+python remove_past_events.py YYYY-MM-DD
+
 # Regenerate the iCalendar feed (events.ics) from events.json
 python generate_ics.py
 ```

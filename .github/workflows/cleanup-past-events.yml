@@ -27,24 +27,13 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Create or checkout branch
+      - name: Create branch
         run: |
           BRANCH_NAME="cleanup-past-events"
 
-          # Fetch remote branches
-          git fetch origin
-
-          # Check if remote branch exists
-          if git ls-remote --heads origin "$BRANCH_NAME" | grep -q "$BRANCH_NAME"; then
-            # Remote branch exists, check it out
-            git checkout "$BRANCH_NAME"
-            git pull origin "$BRANCH_NAME"
-            # Merge latest changes from master
-            git merge origin/master -m "Merge latest changes from master"
-          else
-            # Create new branch from master
-            git checkout -b "$BRANCH_NAME"
-          fi
+          # Always start fresh from master; the branch is force-pushed below,
+          # so a stale branch from an earlier run never needs to be merged
+          git checkout -B "$BRANCH_NAME"
 
           echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
 
@@ -74,7 +63,7 @@ jobs:
           git commit -m "Remove $REMOVED_COUNT past event(s) from events.json"
 
           # Push the branch
-          git push -u origin "$BRANCH_NAME"
+          git push --force -u origin "$BRANCH_NAME"
 
       - name: Create or update Pull Request
         if: steps.cleanup.outputs.has_changes == 'true'

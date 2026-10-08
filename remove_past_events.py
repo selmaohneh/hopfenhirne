@@ -18,6 +18,17 @@ def main():
     # Get today's date at midnight
     today = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0).date()
 
+    # Optional argument: date of an event that already took place (e.g. when
+    # its results are entered on the same day). Events up to and including
+    # that date are removed as well.
+    cutoff = None
+    if len(sys.argv) > 1:
+        try:
+            cutoff = datetime.strptime(sys.argv[1], "%Y-%m-%d").date()
+        except ValueError:
+            print(f"Invalid date format: {sys.argv[1]} (expected YYYY-MM-DD)")
+            sys.exit(1)
+
     # Filter out past events
     future_events = []
     removed_events = []
@@ -25,7 +36,7 @@ def main():
     for event in events:
         try:
             event_date = datetime.strptime(event.get("date", ""), "%Y-%m-%d").date()
-            if event_date >= today:
+            if event_date >= today and (cutoff is None or event_date > cutoff):
                 future_events.append(event)
             else:
                 removed_events.append(event)
