@@ -62,7 +62,7 @@ python generate_ics.py
 
 - **add-event.yml**: Manual trigger to add upcoming events (creates PR)
 - **add-quiz-data.yml**: Manual trigger to add event data with attendees, winners, etc. (creates PR)
-- **cleanup-past-events.yml**: Scheduled (every 12h) cleanup of past events from events.json
+- **cleanup-past-events.yml**: Scheduled (every 12h) cleanup of past events from events.json and events.ics (commits directly to master)
 - **generate-ics.yml**: Regenerates events.ics on pushes to master that change events.json (commits directly to master)
 
 ## Statistics Logic
