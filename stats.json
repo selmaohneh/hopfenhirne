@@ -1,11 +1,11 @@
 {
   "Whizzy": {
     "attendances": 37,
-    "quizmaster_count": 7,
+    "quizmaster_count": 6,
     "hopfenhirn_des_monats_count": 1,
     "wins": 5,
-    "played_events": 28,
-    "winrate": 0.1786
+    "played_events": 29,
+    "winrate": 0.1724
   },
   "Cello": {
     "attendances": 35,
@@ -89,11 +89,11 @@
   },
   "Marvin": {
     "attendances": 6,
-    "quizmaster_count": 0,
+    "quizmaster_count": 1,
     "hopfenhirn_des_monats_count": 1,
     "wins": 3,
-    "played_events": 6,
-    "winrate": 0.5
+    "played_events": 5,
+    "winrate": 0.6
   },
   "Philipp": {
     "attendances": 5,

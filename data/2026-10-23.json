@@ -1,18 +1,18 @@
 {
   "date": "2026-10-23",
   "attendees": [
-    "Luca",
     "Marvin",
-    "Arthur",
     "Whizzy",
+    "Luca",
     "Philipp",
     "Ceddy",
     "Fabsi",
     "Max",
+    "Arthur",
     "Eric"
   ],
   "quizmasters": [
-    "Whizzy"
+    "Marvin"
   ],
   "winners": [
     "Arthur",
