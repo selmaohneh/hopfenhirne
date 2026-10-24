@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-23",
+  "attendees": [
+    "Marvin",
+    "Whizzy",
+    "Luca",
+    "Philipp",
+    "Ceddy",
+    "Fabsi",
+    "Max",
+    "Arthur",
+    "Eric"
+  ],
+  "quizmasters": [
+    "Marvin"
+  ],
+  "winners": [
+    "Arthur",
+    "Philipp"
+  ],
+  "hopfenhirn_des_monats": "Luca"
+}
