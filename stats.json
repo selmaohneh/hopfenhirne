@@ -18,7 +18,7 @@
   "Luca": {
     "attendances": 34,
     "quizmaster_count": 5,
-    "hopfenhirn_des_monats_count": 2,
+    "hopfenhirn_des_monats_count": 1,
     "wins": 13,
     "played_events": 28,
     "winrate": 0.4643
@@ -90,7 +90,7 @@
   "Marvin": {
     "attendances": 6,
     "quizmaster_count": 1,
-    "hopfenhirn_des_monats_count": 1,
+    "hopfenhirn_des_monats_count": 2,
     "wins": 3,
     "played_events": 5,
     "winrate": 0.6
